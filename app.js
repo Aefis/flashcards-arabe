@@ -142,8 +142,8 @@ function marquer(su) {
 }
 
 // ---------- Synthèse vocale ----------
-// Forme pausale : à l'oral, on ne prononce pas le tanwîn ni la voyelle de cas en fin de mot
-// (بَابٌ se dit « bāb », pas « bābun »). L'écriture affichée, elle, garde les terminaisons.
+// Forme pausale (waqf, règle de l'arabe classique) : en fin d'énoncé, on ne prononce ni le tanwîn
+// ni la voyelle de cas (بَابٌ → « bāb »). Case « Terminaisons » cochée : lecture complète (« bābun »).
 function formePausale(texte) {
   return texte.split(/(\s+|،)/).map((mot) => mot
     .replace(/\u064Bا$/, "ا")                  // ـًا → ـا (« -an » devient « -ā »)
@@ -157,7 +157,8 @@ const GOOGLE = "google";
 let voixArabes = [];
 function chercherVoix() {
   if (!("speechSynthesis" in window)) return;
-  voixArabes = speechSynthesis.getVoices().filter((v) => v.lang && v.lang.toLowerCase().startsWith("ar"));
+  // Arabe classique / standard uniquement : on écarte les voix régionales (ar-EG, ar-MA…) à l'accent dialectal
+  voixArabes = speechSynthesis.getVoices().filter((v) => /^ar([-_](SA|001))?$/i.test(v.lang || ""));
   const choix = $("voix");
   const actuel = stock.lire("voix", "");
   choix.innerHTML = `<option value="${GOOGLE}">Google (en ligne)</option>` +
@@ -170,7 +171,8 @@ if ("speechSynthesis" in window) speechSynthesis.onvoiceschanged = chercherVoix;
 let audioEnCours = null;
 function parler(texte, bouton = $("ecouter")) {
   // Retirer les annotations françaises « (m.) » et les séparateurs, puis passer à la forme pausale
-  texte = formePausale(texte.replace(/\([^)]*\)/g, "").replace(/[A-Za-zÀ-ÿ.?؟]/g, "").replace(/\//g, "،").trim());
+  texte = texte.replace(/\([^)]*\)/g, "").replace(/[A-Za-zÀ-ÿ.?؟]/g, "").replace(/\//g, "،").trim();
+  if (!$("terminaisons").checked) texte = formePausale(texte);
   const fin = () => bouton.classList.remove("joue");
   bouton.classList.add("joue");
   if (audioEnCours) audioEnCours.pause();
@@ -403,6 +405,8 @@ $("reset").addEventListener("click", () => {
   toast("Progression effacée.");
 });
 
+$("terminaisons").checked = stock.lire("terminaisons", false);
+$("terminaisons").addEventListener("change", (e) => { stock.ecrire("terminaisons", e.target.checked); const m = etat.paquet[etat.i]; if (m) parler(m.ar); });
 $("voix").addEventListener("change", (e) => { stock.ecrire("voix", e.target.value); parler(etat.paquet[etat.i]?.ar || "مَرْحَبًا"); });
 $("harakat").addEventListener("change", (e) => { etat.harakat = e.target.checked; stock.ecrire("harakat", etat.harakat); afficherCarte(); afficherListe(); });
 $("sens").addEventListener("change", (e) => { etat.sens = e.target.value; stock.ecrire("sens", etat.sens); afficherCarte(); });
