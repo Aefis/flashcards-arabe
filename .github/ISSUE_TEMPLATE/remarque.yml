@@ -1,0 +1,29 @@
+name: Signaler une erreur
+description: Une erreur dans un mot (traduction, orthographe, harakat, pluriel…)
+title: "[Remarque] "
+labels: ["remarque"]
+body:
+  - type: input
+    id: mot
+    attributes:
+      label: Mot concerné
+      description: Rempli automatiquement depuis le site.
+    validations:
+      required: true
+  - type: input
+    id: type
+    attributes:
+      label: Type d'erreur
+      placeholder: Traduction, orthographe / harakat, pluriel, duel, féminin, prononciation, autre
+    validations:
+      required: true
+  - type: textarea
+    id: remarque
+    attributes:
+      label: Quelle est l'erreur ?
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Correction proposée (facultatif)

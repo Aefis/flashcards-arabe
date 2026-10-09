@@ -194,7 +194,7 @@ function afficherListe() {
   $("liste-corps").innerHTML = lignes.map((m) => `
     <tr>
       <td class="ar principal"><span lang="ar">${afficheAr(m.ar)}</span>${boutonDire(m.ar)}</td>
-      <td class="fr">${m.fr}${m.verifier ? ' <span class="badge">à vérifier</span>' : ""}${m.note ? `<br><small>${afficheAr(m.note)}</small>` : ""}${blocCorrection(m)}</td>
+      <td class="fr"><button class="mini drapeau" data-signaler="${MOTS.indexOf(m)}" title="Signaler une erreur" aria-label="Signaler une erreur">⚑</button>${m.fr}${m.verifier ? ' <span class="badge">à vérifier</span>' : ""}${m.note ? `<br><small>${afficheAr(m.note)}</small>` : ""}${blocCorrection(m)}</td>
       <td class="tr" data-label="Translit."><i>${m.tr || ""}</i></td>
       ${cell("Masculin", m.m)}${cell("Féminin", m.f)}${cell("Duel", m.du)}${cell("Pluriel", m.pl)}
       <td class="meta" data-label="Catégorie">${m.cat}</td>
@@ -202,6 +202,54 @@ function afficherListe() {
       <td class="src" data-label="Fichier">${m.src.map(nomCourt).join("<br>")}</td>
     </tr>`).join("");
 }
+
+// ---------- Remarques (GitHub Issues) ----------
+const DEPOT = "https://github.com/Aefis/flashcards-arabe";
+let motSignale = null;
+
+function ouvrirRemarque(m) {
+  if (!m) return;
+  motSignale = m;
+  $("remarque-mot").innerHTML = `<span lang="ar" dir="rtl">${m.ar}</span><b>${m.fr}</b><small>${m.cours.join(", ")} · ${m.cat}</small>`;
+  $("remarque-texte").value = "";
+  $("remarque-correction").value = "";
+  majLienRemarque();
+  $("remarque").showModal();
+  $("remarque-texte").focus();
+}
+
+function majLienRemarque() {
+  const m = motSignale;
+  if (!m) return;
+  const type = $("remarque-type").value;
+  const params = new URLSearchParams({
+    template: "remarque.yml",
+    title: `[${type}] ${sansHarakat(m.ar)} — ${m.fr}`,
+    mot: `${m.ar} — ${m.fr} (${m.cours.join(", ")} · ${m.cat} · ${m.src.join(" ; ")})`,
+    type,
+    remarque: $("remarque-texte").value,
+    correction: $("remarque-correction").value,
+  });
+  $("remarque-envoyer").href = `${DEPOT}/issues/new?${params}`;
+}
+
+["remarque-type", "remarque-texte", "remarque-correction"].forEach((id) =>
+  $(id).addEventListener("input", majLienRemarque));
+$("remarque-type").addEventListener("change", majLienRemarque);
+$("remarque-annuler").addEventListener("click", () => $("remarque").close());
+$("remarque-envoyer").addEventListener("click", (e) => {
+  if (!$("remarque-texte").value.trim()) {
+    e.preventDefault();
+    $("remarque-texte").reportValidity();
+    return;
+  }
+  setTimeout(() => { $("remarque").close(); toast("Merci ! Terminez l'envoi dans l'onglet GitHub qui vient de s'ouvrir."); }, 100);
+});
+$("signaler").addEventListener("click", (e) => { e.stopPropagation(); ouvrirRemarque(etat.paquet[etat.i]); });
+$("liste-corps").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-signaler]");
+  if (b) ouvrirRemarque(MOTS[+b.dataset.signaler]);
+});
 
 // ---------- Événements ----------
 // ---------- Glisser (mobile et souris) ----------
@@ -311,7 +359,7 @@ document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () 
 }));
 
 document.addEventListener("keydown", (e) => {
-  if ($("vue-cartes").hidden || e.target.matches("input, select")) return;
+  if ($("vue-cartes").hidden || $("remarque").open || e.target.matches("input, select, textarea")) return;
   if (e.key === " ") { e.preventDefault(); retourner(); }
   else if (e.key === "ArrowRight") aller(1);
   else if (e.key === "ArrowLeft") aller(-1);

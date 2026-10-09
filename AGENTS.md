@@ -39,6 +39,18 @@ Quand l'utilisateur demande de lancer l'extraction :
 7. Déployer (voir ci-dessous).
 8. Résumer en français : nombre de mots ajoutés par fichier, corrections d'orthographe et lectures « à vérifier ».
 
+## Procédure « traite les remarques »
+
+Les visiteurs signalent des erreurs via le bouton ⚑ du site, qui crée une issue GitHub (label `remarque`,
+modèle `.github/ISSUE_TEMPLATE/remarque.yml` : champs « Mot concerné », « Type d'erreur », « Quelle est l'erreur ? »,
+« Correction proposée »). Liste : https://github.com/Aefis/flashcards-arabe/issues?q=label%3Aremarque
+
+1. `gh issue list --repo Aefis/flashcards-arabe --label remarque --state open`, puis `gh issue view <n>` pour chacune.
+2. Juger chaque remarque (les visiteurs peuvent se tromper) ; en cas de doute, demander à l'utilisateur.
+3. Si elle est fondée : corriger `data/mots.js`, lancer `node outils/verifier.js`, committer avec `Fixes #<n>`.
+   Sinon : `gh issue close <n> --comment "<explication en français>"`.
+4. Déployer, puis résumer à l'utilisateur ce qui a été corrigé ou refusé.
+
 ## Déploiement : GitHub Pages
 
 Site public : https://aefis.github.io/flashcards-arabe/ (dépôt `Aefis/flashcards-arabe`, branche `main`).
