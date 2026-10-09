@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flashcards d'arabe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Flashcards d'arabe</h1>
+    <nav class="tabs">
+      <button class="tab active" data-vue="cartes">Cartes</button>
+      <button class="tab" data-vue="liste">Liste</button>
+    </nav>
+  </header>
+
+  <section class="barre">
+    <label class="switch"><input type="checkbox" id="harakat" checked> <span>Harakat</span></label>
+    <label>Sens
+      <select id="sens">
+        <option value="ar">Arabe → Français</option>
+        <option value="fr">Français → Arabe</option>
+      </select>
+    </label>
+    <label>Catégorie <select id="filtre-cat"></select></label>
+    <label>Cours <select id="filtre-cours"></select></label>
+    <label class="switch"><input type="checkbox" id="a-revoir"> <span>Seulement à revoir</span></label>
+  </section>
+
+  <main>
+    <section id="vue-cartes">
+      <div class="compteur" id="compteur"></div>
+      <div class="carte-zone">
+        <div class="carte" id="carte" tabindex="0" aria-label="Carte : cliquer pour retourner">
+          <div class="face recto">
+            <div class="mot" id="recto-mot"></div>
+            <div class="indice"><span class="pc">Cliquer ou Espace pour retourner</span><span class="tactile">Toucher pour retourner · glisser ← → pour changer</span></div>
+          </div>
+          <div class="face verso">
+            <div class="mot" id="verso-mot"></div>
+            <div class="tr" id="verso-tr"></div>
+            <table class="formes" id="verso-formes"></table>
+            <div class="note" id="verso-note"></div>
+            <div id="verso-corr"></div>
+            <div class="source" id="verso-src"></div>
+          </div>
+        </div>
+        <button class="plein" id="plein" title="Plein écran (touche F)" aria-label="Plein écran">
+          <svg class="ouvrir" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 4h6v2H6v4H4V4zm10 0h6v6h-2V6h-4V4zM4 14h2v4h4v2H4v-6zm14 0h2v6h-6v-2h4v-4z"/></svg>
+          <svg class="fermer" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M8 4h2v6H4V8h4V4zm6 0h2v4h4v2h-6V4zM4 14h6v6H8v-4H4v-2zm10 0h6v2h-4v4h-2v-6z"/></svg>
+        </button>
+        <button class="ecouter" id="ecouter" title="Écouter (touche E)" aria-label="Écouter le mot">
+          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.47 4.47 0 0 0 2.5-4zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/></svg>
+        </button>
+      </div>
+      <div class="actions">
+        <button id="prec">← Précédent</button>
+        <button id="pas-su" class="rouge">À revoir</button>
+        <button id="su" class="vert">Je sais ✓</button>
+        <button id="suiv">Suivant →</button>
+      </div>
+      <div class="actions secondaires">
+        <button id="melanger">Mélanger</button>
+        <button id="reset">Réinitialiser la progression</button>
+      </div>
+      <p class="aide">Raccourcis : Espace = retourner · ← → = naviguer · E = écouter · F = plein écran · 1 = à revoir · 2 = je sais</p>
+    </section>
+
+    <section id="vue-liste" hidden>
+      <input type="search" id="recherche" placeholder="Rechercher (arabe ou français)…">
+      <div class="table-wrap">
+        <table class="liste">
+          <thead>
+            <tr><th>Arabe</th><th>Français</th><th>Translit.</th><th>Masculin</th><th>Féminin</th><th>Duel</th><th>Pluriel</th><th>Catégorie</th><th>Cours</th><th>Fichier</th></tr>
+          </thead>
+          <tbody id="liste-corps"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="data/mots.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
