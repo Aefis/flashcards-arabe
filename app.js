@@ -203,9 +203,22 @@ function afficherListe() {
     </tr>`).join("");
 }
 
-// ---------- Remarques (GitHub Issues) ----------
+// ---------- Remarques ----------
+// Envoi direct via Formspree (sans compte pour le visiteur). Tant que FORMSPREE est vide,
+// ou si l'envoi échoue (réseau, quota atteint), on propose de passer par GitHub Issues.
+const FORMSPREE = ""; // identifiant du formulaire, ex. "xkgwabcd" (https://formspree.io/f/xkgwabcd)
 const DEPOT = "https://github.com/Aefis/flashcards-arabe";
 let motSignale = null;
+
+if (FORMSPREE) document.querySelector(".lien-remarques")?.remove();
+
+function modeRemarque(direct) {
+  $("remarque-envoyer").hidden = !direct;
+  $("remarque-github").hidden = direct;
+  $("remarque-aide").textContent = direct
+    ? "Votre remarque est envoyée anonymement à l'auteur du site."
+    : "La remarque sera publiée sur GitHub (compte GitHub gratuit nécessaire). Vérifiez puis cliquez sur « Submit new issue ».";
+}
 
 function ouvrirRemarque(m) {
   if (!m) return;
@@ -213,31 +226,64 @@ function ouvrirRemarque(m) {
   $("remarque-mot").innerHTML = `<span lang="ar" dir="rtl">${m.ar}</span><b>${m.fr}</b><small>${m.cours.join(", ")} · ${m.cat}</small>`;
   $("remarque-texte").value = "";
   $("remarque-correction").value = "";
+  modeRemarque(!!FORMSPREE);
   majLienRemarque();
   $("remarque").showModal();
   $("remarque-texte").focus();
 }
 
-function majLienRemarque() {
+function champsRemarque() {
   const m = motSignale;
-  if (!m) return;
-  const type = $("remarque-type").value;
-  const params = new URLSearchParams({
-    template: "remarque.yml",
-    title: `[${type}] ${sansHarakat(m.ar)} — ${m.fr}`,
-    mot: `${m.ar} — ${m.fr} (${m.cours.join(", ")} · ${m.cat} · ${m.src.join(" ; ")})`,
-    type,
-    remarque: $("remarque-texte").value,
-    correction: $("remarque-correction").value,
-  });
-  $("remarque-envoyer").href = `${DEPOT}/issues/new?${params}`;
+  return {
+    type: $("remarque-type").value,
+    mot: `${m.ar} — ${m.fr}`,
+    cours: m.cours.join(", "),
+    categorie: m.cat,
+    source: m.src.join(" ; "),
+    remarque: $("remarque-texte").value.trim(),
+    correction: $("remarque-correction").value.trim(),
+  };
 }
 
+function majLienRemarque() {
+  if (!motSignale) return;
+  const c = champsRemarque();
+  const params = new URLSearchParams({
+    template: "remarque.yml",
+    title: `[${c.type}] ${sansHarakat(motSignale.ar)} — ${motSignale.fr}`,
+    mot: `${c.mot} (${c.cours} · ${c.categorie} · ${c.source})`,
+    type: c.type, remarque: c.remarque, correction: c.correction,
+  });
+  $("remarque-github").href = `${DEPOT}/issues/new?${params}`;
+}
+
+$("remarque-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!FORMSPREE) return;
+  const bouton = $("remarque-envoyer");
+  bouton.disabled = true; bouton.textContent = "Envoi…";
+  const c = champsRemarque();
+  try {
+    const r = await fetch(`https://formspree.io/f/${FORMSPREE}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ ...c, _subject: `Remarque flashcards : ${c.mot}` }),
+    });
+    if (!r.ok) throw new Error(r.status);
+    $("remarque").close();
+    toast("Merci, votre remarque a été envoyée.");
+  } catch {
+    modeRemarque(false);
+    $("remarque-aide").textContent = "L'envoi direct n'a pas fonctionné. Vous pouvez envoyer la remarque via GitHub (compte GitHub nécessaire).";
+  } finally {
+    bouton.disabled = false; bouton.textContent = "Envoyer";
+  }
+});
 ["remarque-type", "remarque-texte", "remarque-correction"].forEach((id) =>
   $(id).addEventListener("input", majLienRemarque));
 $("remarque-type").addEventListener("change", majLienRemarque);
 $("remarque-annuler").addEventListener("click", () => $("remarque").close());
-$("remarque-envoyer").addEventListener("click", (e) => {
+$("remarque-github").addEventListener("click", (e) => {
   if (!$("remarque-texte").value.trim()) {
     e.preventDefault();
     $("remarque-texte").reportValidity();

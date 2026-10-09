@@ -102,10 +102,11 @@
       <textarea id="remarque-texte" rows="3" required></textarea>
       <label for="remarque-correction">Correction proposée (facultatif)</label>
       <textarea id="remarque-correction" rows="2" dir="auto"></textarea>
-      <p class="remarque-aide">La remarque est publiée sur GitHub (compte GitHub gratuit nécessaire). Vérifiez puis cliquez sur « Submit new issue ».</p>
+      <p class="remarque-aide" id="remarque-aide"></p>
       <div class="remarque-actions">
         <button type="button" id="remarque-annuler">Annuler</button>
-        <a id="remarque-envoyer" class="bouton-principal" href="#" target="_blank" rel="noopener">Continuer sur GitHub</a>
+        <button type="submit" id="remarque-envoyer" class="bouton-principal" hidden>Envoyer</button>
+        <a id="remarque-github" class="bouton-principal" href="#" target="_blank" rel="noopener" hidden>Continuer sur GitHub</a>
       </div>
     </form>
   </dialog>
