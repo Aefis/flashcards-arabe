@@ -19,24 +19,58 @@
     </nav>
   </header>
 
-  <section class="barre">
-    <label class="switch"><input type="checkbox" id="harakat" checked> <span>Harakat</span></label>
-    <label>Sens
-      <select id="sens">
-        <option value="ar">Arabe → Français</option>
-        <option value="fr">Français → Arabe</option>
-      </select>
-    </label>
-    <label>Catégorie <select id="filtre-cat"></select></label>
-    <label>Cours <select id="filtre-cours"></select></label>
-    <label>Voix <select id="voix"><option value="google">Google (en ligne)</option></select></label>
-    <label class="switch" title="Coché : « bābun » (iʿrāb complet). Décoché : « bāb » (pause, waqf)."><input type="checkbox" id="terminaisons"> <span>Terminaisons (-un)</span></label>
-    <label class="switch"><input type="checkbox" id="a-revoir"> <span>Seulement à revoir</span></label>
+  <section class="resume" aria-label="Sélection en cours">
+    <button class="puces" id="ouvrir-reglages" aria-haspopup="dialog" title="Réglages">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M3 5h10v2H3V5zm14 0h4v2h-4v2h-2V3h2v2zM3 11h4V9h2v6H7v-2H3v-2zm8 0h10v2H11v-2zM3 17h10v2H3v-2zm14 0h4v2h-4v2h-2v-6h2v2z"/></svg>
+      <span id="puces"></span>
+    </button>
+    <button class="icone" id="melanger" title="Mélanger" aria-label="Mélanger les cartes">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M10.6 9.2 5.4 4 4 5.4l5.2 5.2 1.4-1.4zM14.5 4l2 2L4 18.6 5.4 20 18 7.5l2 2V4h-5.5zm.3 9.4-1.4 1.4 3.1 3.1-2 2.1H20v-5.5l-2 2-3.2-3.1z"/></svg>
+    </button>
   </section>
+
+  <dialog id="reglages" class="feuille" aria-labelledby="reglages-titre">
+    <form method="dialog" class="reglages-corps">
+      <div class="feuille-poignee" aria-hidden="true"></div>
+      <h2 id="reglages-titre">Réglages</h2>
+
+      <fieldset>
+        <legend>Cartes</legend>
+        <label for="filtre-cours">Cours</label>
+        <select id="filtre-cours"></select>
+        <label for="filtre-cat">Catégorie</label>
+        <select id="filtre-cat"></select>
+        <label for="sens">Sens</label>
+        <select id="sens">
+          <option value="ar">Arabe → Français</option>
+          <option value="fr">Français → Arabe</option>
+        </select>
+        <label class="switch"><input type="checkbox" id="a-revoir"> <span>Seulement les mots pas encore sus</span></label>
+        <label class="switch"><input type="checkbox" id="harakat" checked> <span>Afficher les harakat</span></label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Prononciation</legend>
+        <label for="voix">Voix</label>
+        <select id="voix"><option value="google">Google (en ligne)</option></select>
+        <label class="switch"><input type="checkbox" id="terminaisons"> <span>Prononcer les terminaisons (« bābun » au lieu de « bāb »)</span></label>
+      </fieldset>
+
+      <fieldset class="danger">
+        <legend>Progression</legend>
+        <button type="button" id="reset">Réinitialiser la progression</button>
+      </fieldset>
+
+      <button type="submit" class="bouton-principal fermer-feuille">Terminé</button>
+    </form>
+  </dialog>
 
   <main>
     <section id="vue-cartes">
-      <div class="compteur" id="compteur"></div>
+      <div class="progression" id="progression" aria-live="polite">
+        <div class="barre-prog" aria-hidden="true"><span class="prog-su" id="prog-su"></span><span class="prog-revoir" id="prog-revoir"></span></div>
+        <div class="compteur" id="compteur"></div>
+      </div>
       <div class="carte-zone">
         <div class="carte" id="carte" tabindex="0" aria-label="Carte : cliquer pour retourner">
           <div class="face recto">
@@ -59,6 +93,14 @@
         <button class="signaler" id="signaler" title="Signaler une erreur sur ce mot" aria-label="Signaler une erreur sur ce mot">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M5 3h2v18H5V3zm3 1h10l-2 4 2 4H8V4z"/></svg>
         </button>
+        <div class="fin" id="fin" hidden>
+          <h2 id="fin-titre">Paquet terminé</h2>
+          <p class="fin-stats"><span class="ok" id="fin-sus"></span><span class="ko" id="fin-revoir"></span></p>
+          <div class="fin-actions">
+            <button type="button" class="bouton-principal" id="fin-revoir-btn">Revoir les mots à revoir</button>
+            <button type="button" id="fin-recommencer">Recommencer tout le paquet</button>
+          </div>
+        </div>
         <button class="ecouter" id="ecouter" title="Écouter (touche E)" aria-label="Écouter le mot">
           <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.47 4.47 0 0 0 2.5-4zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/></svg>
         </button>
@@ -68,10 +110,6 @@
         <button id="pas-su" class="rouge">À revoir</button>
         <button id="su" class="vert">Je sais ✓</button>
         <button id="suiv">Suivant →</button>
-      </div>
-      <div class="actions secondaires">
-        <button id="melanger">Mélanger</button>
-        <button id="reset">Réinitialiser la progression</button>
       </div>
       <p class="aide">Raccourcis : Espace = retourner · ← → = naviguer · E = écouter · F = plein écran · 1 = à revoir · 2 = je sais</p>
     </section>

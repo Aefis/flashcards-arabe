@@ -50,6 +50,19 @@ function remplirFiltres() {
   $("harakat").checked = etat.harakat;
   $("sens").value = etat.sens;
   $("a-revoir").checked = etat.aRevoir;
+  majPuces();
+}
+
+// Résumé de la sélection, affiché en haut (ouvre les réglages)
+function majPuces() {
+  const puces = [
+    etat.cours || "Tous les cours",
+    etat.cat || "Toutes catégories",
+    etat.sens === "ar" ? "AR → FR" : "FR → AR",
+  ];
+  if (etat.aRevoir) puces.push("Pas encore sus");
+  if (!etat.harakat) puces.push("Sans harakat");
+  $("puces").innerHTML = puces.map((p) => `<span class="puce">${p}</span>`).join("");
 }
 
 function motsFiltres() {
@@ -68,6 +81,7 @@ function construirePaquet(melanger = false) {
     }
   }
   etat.i = 0;
+  majPuces();
   afficherCarte();
   afficherListe();
 }
@@ -76,18 +90,15 @@ function construirePaquet(melanger = false) {
 function afficherCarte() {
   const carte = $("carte");
   carte.classList.remove("retournee");
+  $("fin").hidden = true;
+  $("vue-cartes").classList.remove("termine");
   const m = etat.paquet[etat.i];
-  const nbSus = etat.paquet.filter((x) => etat.connus[x.id] === true).length;
+  majProgression();
 
   if (!m) {
-    $("recto-mot").className = "mot fr";
-    $("recto-mot").textContent = etat.aRevoir ? "Bravo, plus rien à revoir 🎉" : "Aucun mot";
-    $("compteur").textContent = "";
-    $("verso-mot").textContent = "";
+    afficherFin();
     return;
   }
-  $("compteur").textContent = `${etat.i + 1} / ${etat.paquet.length} · ${nbSus} su(s)` +
-    (etat.connus[m.id] === true ? " · ✓ connu" : etat.connus[m.id] === false ? " · à revoir" : "");
 
   const arHtml = `<span lang="ar" dir="rtl">${afficheAr(m.ar)}</span>`;
   const recto = $("recto-mot"), verso = $("verso-mot");
@@ -121,7 +132,37 @@ function tableauFormes(m) {
     .map(([k, v]) => `<tr><th>${k}</th><td>${forme(v)}</td></tr>`).join("");
 }
 
-function retourner() { if (etat.paquet.length) $("carte").classList.toggle("retournee"); }
+// Barre de progression : vert = sus, rouge = à revoir (sur le paquet en cours)
+function majProgression() {
+  const n = etat.paquet.length;
+  const sus = etat.paquet.filter((x) => etat.connus[x.id] === true).length;
+  const revoir = etat.paquet.filter((x) => etat.connus[x.id] === false).length;
+  $("prog-su").style.width = n ? `${(sus / n) * 100}%` : "0";
+  $("prog-revoir").style.width = n ? `${(revoir / n) * 100}%` : "0";
+  const m = etat.paquet[etat.i];
+  const statut = !m ? "" : etat.connus[m.id] === true ? ' · <b class="ok">sue</b>' : etat.connus[m.id] === false ? ' · <b class="ko">à revoir</b>' : "";
+  $("compteur").innerHTML = n
+    ? `<span>Carte ${Math.min(etat.i + 1, n)} / ${n}${statut}</span><span><b class="ok">${sus} ✓</b> · <b class="ko">${revoir} à revoir</b></span>`
+    : "";
+}
+
+// Écran de fin de paquet
+function afficherFin() {
+  const n = etat.paquet.length;
+  const sus = etat.paquet.filter((x) => etat.connus[x.id] === true).length;
+  const revoir = motsFiltres().filter((x) => etat.connus[x.id] === false);
+  $("fin-titre").textContent = n ? "Paquet terminé" : etat.aRevoir ? "Bravo, plus rien à revoir" : "Aucun mot dans cette sélection";
+  $("fin-sus").textContent = n ? `${sus} sus` : "";
+  $("fin-revoir").textContent = revoir.length ? `${revoir.length} à revoir` : "";
+  $("fin-revoir-btn").hidden = !revoir.length;
+  $("fin-revoir-btn").textContent = `Revoir les ${revoir.length} mot${revoir.length > 1 ? "s" : ""} à revoir`;
+  $("fin-recommencer").hidden = !motsFiltres().length;
+  $("fin").hidden = false;
+  $("vue-cartes").classList.add("termine");
+  majProgression();
+}
+
+function retourner() { if (etat.paquet.length && $("fin").hidden) $("carte").classList.toggle("retournee"); }
 function aller(delta) {
   if (!etat.paquet.length) return;
   etat.i = (etat.i + delta + etat.paquet.length) % etat.paquet.length;
@@ -132,14 +173,25 @@ function marquer(su) {
   if (!m) return;
   etat.connus[m.id] = su;
   stock.ecrire("connus", etat.connus);
+  vibrer(su ? 12 : [10, 40, 10]);
   if (etat.aRevoir && su) {
     etat.paquet.splice(etat.i, 1);
-    if (etat.i >= etat.paquet.length) etat.i = 0;
-    afficherCarte();
+    if (etat.i >= etat.paquet.length) afficherFin();
+    else afficherCarte();
+  } else if (etat.i >= etat.paquet.length - 1) {
+    afficherFin();
   } else {
     aller(1);
   }
 }
+const vibrer = (motif) => { try { navigator.vibrate?.(motif); } catch {} };
+
+$("fin-revoir-btn").addEventListener("click", () => {
+  etat.paquet = motsFiltres().filter((x) => etat.connus[x.id] === false);
+  etat.i = 0;
+  afficherCarte();
+});
+$("fin-recommencer").addEventListener("click", () => construirePaquet());
 
 // ---------- Synthèse vocale ----------
 // Forme pausale (waqf, règle de l'arabe classique) : en fin d'énoncé, on ne prononce ni le tanwîn
@@ -405,11 +457,14 @@ $("reset").addEventListener("click", () => {
   toast("Progression effacée.");
 });
 
+$("ouvrir-reglages").addEventListener("click", () => $("reglages").showModal());
+// Toucher le fond grisé ferme le panneau
+$("reglages").addEventListener("click", (e) => { if (e.target === $("reglages")) $("reglages").close(); });
 $("terminaisons").checked = stock.lire("terminaisons", false);
 $("terminaisons").addEventListener("change", (e) => { stock.ecrire("terminaisons", e.target.checked); const m = etat.paquet[etat.i]; if (m) parler(m.ar); });
 $("voix").addEventListener("change", (e) => { stock.ecrire("voix", e.target.value); parler(etat.paquet[etat.i]?.ar || "مَرْحَبًا"); });
-$("harakat").addEventListener("change", (e) => { etat.harakat = e.target.checked; stock.ecrire("harakat", etat.harakat); afficherCarte(); afficherListe(); });
-$("sens").addEventListener("change", (e) => { etat.sens = e.target.value; stock.ecrire("sens", etat.sens); afficherCarte(); });
+$("harakat").addEventListener("change", (e) => { etat.harakat = e.target.checked; stock.ecrire("harakat", etat.harakat); majPuces(); afficherCarte(); afficherListe(); });
+$("sens").addEventListener("change", (e) => { etat.sens = e.target.value; stock.ecrire("sens", etat.sens); majPuces(); afficherCarte(); });
 $("filtre-cat").addEventListener("change", (e) => { etat.cat = e.target.value; stock.ecrire("cat", etat.cat); construirePaquet(); });
 $("filtre-cours").addEventListener("change", (e) => { etat.cours = e.target.value; stock.ecrire("cours", etat.cours); construirePaquet(); });
 $("a-revoir").addEventListener("change", (e) => { etat.aRevoir = e.target.checked; stock.ecrire("aRevoir", etat.aRevoir); construirePaquet(); });
@@ -429,7 +484,8 @@ document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () 
 }));
 
 document.addEventListener("keydown", (e) => {
-  if ($("vue-cartes").hidden || $("remarque").open || e.target.matches("input, select, textarea")) return;
+  if ($("vue-cartes").hidden || $("remarque").open || $("reglages").open || e.target.matches("input, select, textarea")) return;
+  if (!$("fin").hidden) return;
   if (e.key === " ") { e.preventDefault(); retourner(); }
   else if (e.key === "ArrowRight") aller(1);
   else if (e.key === "ArrowLeft") aller(-1);
