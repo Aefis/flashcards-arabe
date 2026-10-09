@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Sans référent : la voix de Google Traduction refuse les requêtes venant d'un autre site -->
+  <meta name="referrer" content="no-referrer">
   <title>Flashcards d'arabe</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,7 +16,6 @@
     <nav class="tabs">
       <button class="tab active" data-vue="cartes">Cartes</button>
       <button class="tab" data-vue="liste">Liste</button>
-      <a class="tab lien-remarques" href="https://github.com/Aefis/flashcards-arabe/issues?q=label%3Aremarque" target="_blank" rel="noopener">Remarques</a>
     </nav>
   </header>
 
@@ -28,6 +29,7 @@
     </label>
     <label>Catégorie <select id="filtre-cat"></select></label>
     <label>Cours <select id="filtre-cours"></select></label>
+    <label>Voix <select id="voix"><option value="google">Google (en ligne)</option></select></label>
     <label class="switch"><input type="checkbox" id="a-revoir"> <span>Seulement à revoir</span></label>
   </section>
 
@@ -78,7 +80,7 @@
       <div class="table-wrap">
         <table class="liste">
           <thead>
-            <tr><th>Arabe</th><th>Français</th><th>Translit.</th><th>Masculin</th><th>Féminin</th><th>Duel</th><th>Pluriel</th><th>Catégorie</th><th>Cours</th><th>Fichier</th></tr>
+            <tr><th>Arabe</th><th>Français</th><th>Translit.</th><th>Masculin</th><th>Féminin</th><th>Duel</th><th>Duel fém.</th><th>Pluriel</th><th>Pluriel fém.</th><th>Catégorie</th><th>Cours</th><th>Fichier</th></tr>
           </thead>
           <tbody id="liste-corps"></tbody>
         </table>
@@ -102,11 +104,10 @@
       <textarea id="remarque-texte" rows="3" required></textarea>
       <label for="remarque-correction">Correction proposée (facultatif)</label>
       <textarea id="remarque-correction" rows="2" dir="auto"></textarea>
-      <p class="remarque-aide" id="remarque-aide"></p>
+      <p class="remarque-aide" id="remarque-aide" hidden></p>
       <div class="remarque-actions">
         <button type="button" id="remarque-annuler">Annuler</button>
-        <button type="submit" id="remarque-envoyer" class="bouton-principal" hidden>Envoyer</button>
-        <a id="remarque-github" class="bouton-principal" href="#" target="_blank" rel="noopener" hidden>Continuer sur GitHub</a>
+        <button type="submit" id="remarque-envoyer" class="bouton-principal">Envoyer</button>
       </div>
     </form>
   </dialog>

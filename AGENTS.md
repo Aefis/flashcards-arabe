@@ -41,17 +41,17 @@ Quand l'utilisateur demande de lancer l'extraction :
 
 ## Procédure « traite les remarques »
 
-Les visiteurs signalent des erreurs via le bouton ⚑ du site (formulaire dans `index.html`, logique dans `app.js`,
-section « Remarques »). Envoi direct via Formspree (constante `FORMSPREE` dans `app.js`) : l'utilisateur reçoit
-les remarques par e-mail et dans son tableau de bord Formspree, que les agents ne peuvent pas lire.
-Si l'envoi direct échoue, le site propose une issue GitHub (label `remarque`, modèle `.github/ISSUE_TEMPLATE/remarque.yml`).
+Les visiteurs signalent des erreurs via le bouton ⚑ du site. Chaque remarque est ajoutée en ligne au fichier
+`remarques.csv` du dépôt **privé** `Aefis/flashcards-arabe-remarques`
+(colonnes : date, mot, francais, type, remarque, correction, cours, categorie, source).
+L'écriture passe par l'API GitHub avec une clé limitée à ce dépôt, installée dans `app.js` par `outils/cle.py`.
 
-1. Récupérer les remarques : celles que l'utilisateur colle ou exporte (CSV Formspree), plus les issues
-   `gh issue list --repo Aefis/flashcards-arabe --label remarque --state open`.
-2. Juger chaque remarque (les visiteurs peuvent se tromper) ; en cas de doute, demander à l'utilisateur.
-3. Si elle est fondée : corriger `data/mots.js` et lancer `node outils/verifier.js`
-   (pour une issue : committer avec `Fixes #<n>` ; sinon `gh issue close <n> --comment "<explication>"`).
-4. Déployer, puis résumer à l'utilisateur ce qui a été corrigé ou refusé.
+1. Lire le fichier : `gh api repos/Aefis/flashcards-arabe-remarques/contents/remarques.csv -H "Accept: application/vnd.github.raw"`.
+2. Juger chaque remarque non encore traitée (les visiteurs peuvent se tromper) ; en cas de doute, demander à l'utilisateur.
+3. Si elle est fondée : corriger `data/mots.js` et lancer `node outils/verifier.js`.
+4. Déplacer les remarques traitées dans `traitees.csv` du même dépôt (avec une colonne `decision`),
+   pour que `remarques.csv` ne contienne que les remarques en attente.
+5. Déployer le site, puis résumer à l'utilisateur ce qui a été corrigé ou refusé.
 
 ## Déploiement : GitHub Pages
 

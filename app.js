@@ -100,14 +100,25 @@ function afficherCarte() {
   }
 
   $("verso-tr").textContent = m.tr || "";
-  const lignes = [["Masculin", m.m], ["Féminin", m.f], ["Duel", m.du], ["Pluriel", m.pl]]
-    .filter(([, v]) => v)
-    .map(([k, v]) => `<tr><th>${k}</th><td lang="ar">${afficheAr(v)}</td><td>${boutonDire(v)}</td></tr>`);
-  $("verso-formes").innerHTML = lignes.join("");
+  $("verso-formes").innerHTML = tableauFormes(m);
   $("verso-note").innerHTML = (m.note ? afficheAr(m.note) : "") +
     (m.verifier ? ` <span class="badge">lecture à vérifier</span>` : "");
   $("verso-corr").innerHTML = blocCorrection(m);
   $("verso-src").textContent = m.cours.join(" · ") + " — " + m.cat + " — " + m.src.map(nomCourt).join(" · ");
+}
+
+// Formes : tableau Masculin / Féminin × Singulier / Duel / Pluriel quand le mot a un féminin,
+// sinon simple liste Duel / Pluriel.
+function tableauFormes(m) {
+  const forme = (v) => v ? `<span lang="ar">${afficheAr(v)}</span>${boutonDire(v)}` : "—";
+  if (m.f) {
+    return `<thead><tr><th></th><th>Masculin</th><th>Féminin</th></tr></thead><tbody>` +
+      [["Singulier", m.m, m.f], ["Duel", m.du, m.du_f], ["Pluriel", m.pl, m.pl_f]]
+        .filter(([, a, b]) => a || b)
+        .map(([k, a, b]) => `<tr><th>${k}</th><td>${forme(a)}</td><td>${forme(b)}</td></tr>`).join("") + "</tbody>";
+  }
+  return [["Duel", m.du], ["Pluriel", m.pl]].filter(([, v]) => v)
+    .map(([k, v]) => `<tr><th>${k}</th><td>${forme(v)}</td></tr>`).join("");
 }
 
 function retourner() { if (etat.paquet.length) $("carte").classList.toggle("retournee"); }
@@ -131,39 +142,55 @@ function marquer(su) {
 }
 
 // ---------- Synthèse vocale ----------
-let voixArabe = null;
-function chercherVoix() {
-  const voix = speechSynthesis.getVoices().filter((v) => v.lang && v.lang.toLowerCase().startsWith("ar"));
-  // Préférer les voix "naturelles"/en ligne (Edge) qui lisent mieux les harakat
-  voixArabe = voix.find((v) => /natural|online/i.test(v.name)) || voix[0] || null;
-}
-if ("speechSynthesis" in window) {
-  chercherVoix();
-  speechSynthesis.onvoiceschanged = chercherVoix;
+// Forme pausale : à l'oral, on ne prononce pas le tanwîn ni la voyelle de cas en fin de mot
+// (بَابٌ se dit « bāb », pas « bābun »). L'écriture affichée, elle, garde les terminaisons.
+function formePausale(texte) {
+  return texte.split(/(\s+|،)/).map((mot) => mot
+    .replace(/\u064Bا$/, "ا")                  // ـًا → ـا (« -an » devient « -ā »)
+    // tanwîn et voyelle finale (ٌ ٍ ً ُ ِ َ ْ) retirés, en gardant une éventuelle chadda (ّ)
+    .replace(/[ً-ْ]+$/, (fin) => (fin.includes("ّ") ? "ّ" : ""))
+  ).join("");
 }
 
-let audioSecours = null;
+// Voix : celles de l'appareil + celle de Google (souvent la plus naturelle, nécessite internet)
+const GOOGLE = "google";
+let voixArabes = [];
+function chercherVoix() {
+  if (!("speechSynthesis" in window)) return;
+  voixArabes = speechSynthesis.getVoices().filter((v) => v.lang && v.lang.toLowerCase().startsWith("ar"));
+  const choix = $("voix");
+  const actuel = stock.lire("voix", "");
+  choix.innerHTML = `<option value="${GOOGLE}">Google (en ligne)</option>` +
+    voixArabes.map((v) => `<option value="${echapper(v.name)}">${echapper(v.name)}</option>`).join("");
+  const naturelle = voixArabes.find((v) => /natural|online|neural/i.test(v.name));
+  choix.value = [...choix.options].some((o) => o.value === actuel) ? actuel : (naturelle ? naturelle.name : GOOGLE);
+}
+if ("speechSynthesis" in window) speechSynthesis.onvoiceschanged = chercherVoix;
+
+let audioEnCours = null;
 function parler(texte, bouton = $("ecouter")) {
-  // Toujours prononcer avec harakat ; retirer les annotations françaises « (m.) », « / »
-  texte = texte.replace(/\([^)]*\)/g, "").replace(/[A-Za-zÀ-ÿ.?؟]/g, "").replace(/\//g, "،").trim();
+  // Retirer les annotations françaises « (m.) » et les séparateurs, puis passer à la forme pausale
+  texte = formePausale(texte.replace(/\([^)]*\)/g, "").replace(/[A-Za-zÀ-ÿ.?؟]/g, "").replace(/\//g, "،").trim());
   const fin = () => bouton.classList.remove("joue");
   bouton.classList.add("joue");
+  if (audioEnCours) audioEnCours.pause();
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
 
-  if (voixArabe) {
-    speechSynthesis.cancel();
+  const voix = voixArabes.find((v) => v.name === $("voix").value);
+  if (voix) {
     const u = new SpeechSynthesisUtterance(texte);
-    u.voice = voixArabe; u.lang = voixArabe.lang; u.rate = 0.8;
+    u.voice = voix; u.lang = voix.lang; u.rate = 0.85;
     u.onend = fin; u.onerror = fin;
     speechSynthesis.speak(u);
     return;
   }
-  // Secours : voix de Google Traduction (nécessite internet)
-  if (audioSecours) audioSecours.pause();
-  audioSecours = new Audio("https://translate.google.com/translate_tts?ie=UTF-8&tl=ar&client=tw-ob&q=" + encodeURIComponent(texte));
-  audioSecours.onended = fin;
-  audioSecours.play().catch(() => {
+  audioEnCours = new Audio("https://translate.google.com/translate_tts?ie=UTF-8&tl=ar&client=tw-ob&q=" + encodeURIComponent(texte));
+  audioEnCours.onended = fin;
+  audioEnCours.play().catch(() => {
     fin();
-    toast("Aucune voix arabe trouvée sur cet appareil. Sur PC : utilisez Microsoft Edge. Sur téléphone : ajoutez la langue arabe dans les réglages de synthèse vocale.");
+    toast(voixArabes.length
+      ? "La voix Google ne répond pas. Choisissez une autre voix dans le menu « Voix »."
+      : "Aucune voix disponible. Vérifiez la connexion internet, ou ajoutez la langue arabe dans les réglages de synthèse vocale de l'appareil.");
   });
 }
 
@@ -196,7 +223,7 @@ function afficherListe() {
       <td class="ar principal"><span lang="ar">${afficheAr(m.ar)}</span>${boutonDire(m.ar)}</td>
       <td class="fr"><button class="mini drapeau" data-signaler="${MOTS.indexOf(m)}" title="Signaler une erreur" aria-label="Signaler une erreur">⚑</button>${m.fr}${m.verifier ? ' <span class="badge">à vérifier</span>' : ""}${m.note ? `<br><small>${afficheAr(m.note)}</small>` : ""}${blocCorrection(m)}</td>
       <td class="tr" data-label="Translit."><i>${m.tr || ""}</i></td>
-      ${cell("Masculin", m.m)}${cell("Féminin", m.f)}${cell("Duel", m.du)}${cell("Pluriel", m.pl)}
+      ${cell("Masculin", m.m)}${cell("Féminin", m.f)}${cell(m.du_f ? "Duel masc." : "Duel", m.du)}${cell("Duel fém.", m.du_f)}${cell(m.pl_f ? "Pluriel masc." : "Pluriel", m.pl)}${cell("Pluriel fém.", m.pl_f)}
       <td class="meta" data-label="Catégorie">${m.cat}</td>
       <td class="meta" data-label="Cours">${m.cours.join(", ")}</td>
       <td class="src" data-label="Fichier">${m.src.map(nomCourt).join("<br>")}</td>
@@ -204,21 +231,22 @@ function afficherListe() {
 }
 
 // ---------- Remarques ----------
-// Envoi direct via Formspree (sans compte pour le visiteur). Tant que FORMSPREE est vide,
-// ou si l'envoi échoue (réseau, quota atteint), on propose de passer par GitHub Issues.
-const FORMSPREE = ""; // identifiant du formulaire, ex. "xkgwabcd" (https://formspree.io/f/xkgwabcd)
-const DEPOT = "https://github.com/Aefis/flashcards-arabe";
+// Chaque remarque est ajoutée en ligne au fichier remarques.csv du dépôt privé
+// Aefis/flashcards-arabe-remarques, via l'API GitHub.
+// La clé ne donne accès qu'à ce dépôt de remarques (jamais au site). Elle est stockée découpée
+// et inversée pour ne pas être prise pour une fuite par les robots de GitHub.
+const REMARQUES = {
+  depot: "Aefis/flashcards-arabe-remarques",
+  fichier: "remarques.csv",
+  cle: [""].join("").split("").reverse().join(""), // à remplir avec outils/cle.py
+};
 let motSignale = null;
+// Sans clé, le formulaire ne peut rien enregistrer : on cache les boutons ⚑
+if (!REMARQUES.cle) document.documentElement.classList.add("sans-remarques");
 
-if (FORMSPREE) document.querySelector(".lien-remarques")?.remove();
-
-function modeRemarque(direct) {
-  $("remarque-envoyer").hidden = !direct;
-  $("remarque-github").hidden = direct;
-  $("remarque-aide").textContent = direct
-    ? "Votre remarque est envoyée anonymement à l'auteur du site."
-    : "La remarque sera publiée sur GitHub (compte GitHub gratuit nécessaire). Vérifiez puis cliquez sur « Submit new issue ».";
-}
+const enBase64 = (txt) => btoa(unescape(encodeURIComponent(txt)));
+const deBase64 = (b64) => decodeURIComponent(escape(atob(b64.replace(/\s/g, ""))));
+const csv = (v) => `"${String(v ?? "").replace(/"/g, '""').replace(/\r?\n/g, " ")}"`;
 
 function ouvrirRemarque(m) {
   if (!m) return;
@@ -226,71 +254,62 @@ function ouvrirRemarque(m) {
   $("remarque-mot").innerHTML = `<span lang="ar" dir="rtl">${m.ar}</span><b>${m.fr}</b><small>${m.cours.join(", ")} · ${m.cat}</small>`;
   $("remarque-texte").value = "";
   $("remarque-correction").value = "";
-  modeRemarque(!!FORMSPREE);
-  majLienRemarque();
+  $("remarque-aide").hidden = true;
   $("remarque").showModal();
   $("remarque-texte").focus();
 }
 
-function champsRemarque() {
-  const m = motSignale;
-  return {
-    type: $("remarque-type").value,
-    mot: `${m.ar} — ${m.fr}`,
-    cours: m.cours.join(", "),
-    categorie: m.cat,
-    source: m.src.join(" ; "),
-    remarque: $("remarque-texte").value.trim(),
-    correction: $("remarque-correction").value.trim(),
-  };
-}
-
-function majLienRemarque() {
-  if (!motSignale) return;
-  const c = champsRemarque();
-  const params = new URLSearchParams({
-    template: "remarque.yml",
-    title: `[${c.type}] ${sansHarakat(motSignale.ar)} — ${motSignale.fr}`,
-    mot: `${c.mot} (${c.cours} · ${c.categorie} · ${c.source})`,
-    type: c.type, remarque: c.remarque, correction: c.correction,
+async function ajouterRemarque(ligne, essais = 4) {
+  const url = `https://api.github.com/repos/${REMARQUES.depot}/contents/${REMARQUES.fichier}`;
+  const entetes = { Authorization: `Bearer ${REMARQUES.cle}`, Accept: "application/vnd.github+json" };
+  const lu = await fetch(url, { headers: entetes, cache: "no-store" });
+  if (!lu.ok) throw new Error("lecture " + lu.status);
+  const { sha, content } = await lu.json();
+  const ecrit = await fetch(url, {
+    method: "PUT",
+    headers: entetes,
+    body: JSON.stringify({
+      message: "Nouvelle remarque",
+      content: enBase64(deBase64(content).replace(/\n*$/, "\n") + ligne + "\n"),
+      sha,
+    }),
   });
-  $("remarque-github").href = `${DEPOT}/issues/new?${params}`;
+  // 409 : quelqu'un a écrit en même temps, on relit et on recommence
+  if (ecrit.status === 409 && essais > 1) return ajouterRemarque(ligne, essais - 1);
+  if (!ecrit.ok) throw new Error("écriture " + ecrit.status);
+  // Deux envois à la même milliseconde peuvent s'écraser : on vérifie que la ligne est bien là
+  const verif = await fetch(url, { headers: entetes, cache: "no-store" });
+  if (verif.ok && !deBase64((await verif.json()).content).includes(ligne)) {
+    if (essais > 1) return ajouterRemarque(ligne, essais - 1);
+    throw new Error("remarque écrasée");
+  }
 }
 
 $("remarque-form").addEventListener("submit", async (e) => {
   e.preventDefault();
-  if (!FORMSPREE) return;
+  const m = motSignale;
+  const texte = $("remarque-texte").value.trim();
+  if (!m || !texte) return;
   const bouton = $("remarque-envoyer");
   bouton.disabled = true; bouton.textContent = "Envoi…";
-  const c = champsRemarque();
+  const ligne = [
+    new Date().toISOString().slice(0, 16).replace("T", " "),
+    m.ar, m.fr, $("remarque-type").value, texte, $("remarque-correction").value.trim(),
+    m.cours.join(", "), m.cat, m.src.join(" ; "),
+  ].map(csv).join(",");
   try {
-    const r = await fetch(`https://formspree.io/f/${FORMSPREE}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({ ...c, _subject: `Remarque flashcards : ${c.mot}` }),
-    });
-    if (!r.ok) throw new Error(r.status);
+    if (!REMARQUES.cle) throw new Error("clé absente");
+    await ajouterRemarque(ligne);
     $("remarque").close();
-    toast("Merci, votre remarque a été envoyée.");
+    toast("Merci, votre remarque a été enregistrée.");
   } catch {
-    modeRemarque(false);
-    $("remarque-aide").textContent = "L'envoi direct n'a pas fonctionné. Vous pouvez envoyer la remarque via GitHub (compte GitHub nécessaire).";
+    $("remarque-aide").hidden = false;
+    $("remarque-aide").textContent = "La remarque n'a pas pu être enregistrée. Vérifiez votre connexion et réessayez dans un instant.";
   } finally {
     bouton.disabled = false; bouton.textContent = "Envoyer";
   }
 });
-["remarque-type", "remarque-texte", "remarque-correction"].forEach((id) =>
-  $(id).addEventListener("input", majLienRemarque));
-$("remarque-type").addEventListener("change", majLienRemarque);
 $("remarque-annuler").addEventListener("click", () => $("remarque").close());
-$("remarque-github").addEventListener("click", (e) => {
-  if (!$("remarque-texte").value.trim()) {
-    e.preventDefault();
-    $("remarque-texte").reportValidity();
-    return;
-  }
-  setTimeout(() => { $("remarque").close(); toast("Merci ! Terminez l'envoi dans l'onglet GitHub qui vient de s'ouvrir."); }, 100);
-});
 $("signaler").addEventListener("click", (e) => { e.stopPropagation(); ouvrirRemarque(etat.paquet[etat.i]); });
 $("liste-corps").addEventListener("click", (e) => {
   const b = e.target.closest("[data-signaler]");
@@ -384,6 +403,7 @@ $("reset").addEventListener("click", () => {
   toast("Progression effacée.");
 });
 
+$("voix").addEventListener("change", (e) => { stock.ecrire("voix", e.target.value); parler(etat.paquet[etat.i]?.ar || "مَرْحَبًا"); });
 $("harakat").addEventListener("change", (e) => { etat.harakat = e.target.checked; stock.ecrire("harakat", etat.harakat); afficherCarte(); afficherListe(); });
 $("sens").addEventListener("change", (e) => { etat.sens = e.target.value; stock.ecrire("sens", etat.sens); afficherCarte(); });
 $("filtre-cat").addEventListener("change", (e) => { etat.cat = e.target.value; stock.ecrire("cat", etat.cat); construirePaquet(); });
@@ -417,4 +437,5 @@ document.addEventListener("keydown", (e) => {
 });
 
 remplirFiltres();
+chercherVoix();
 construirePaquet();
