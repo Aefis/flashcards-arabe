@@ -110,7 +110,7 @@ function afficherCarte() {
     verso.className = "mot"; verso.innerHTML = arHtml;
   }
 
-  $("verso-tr").textContent = m.tr || "";
+  $("verso-tr").textContent = [m.tr, m.racine && `racine : ${m.racine}`].filter(Boolean).join(" · ");
   $("verso-formes").innerHTML = tableauFormes(m);
   $("verso-note").innerHTML = (m.note ? afficheAr(m.note) : "") +
     (m.verifier ? ` <span class="badge">lecture à vérifier</span>` : "");
@@ -275,7 +275,7 @@ function afficherListe() {
   $("liste-corps").innerHTML = lignes.map((m) => `
     <tr>
       <td class="ar principal"><span lang="ar">${afficheAr(m.ar)}</span>${boutonDire(m.ar)}</td>
-      <td class="fr"><button class="mini drapeau" data-signaler="${MOTS.indexOf(m)}" title="Signaler une erreur" aria-label="Signaler une erreur">⚑</button>${m.fr}${m.verifier ? ' <span class="badge">à vérifier</span>' : ""}${m.note ? `<br><small>${afficheAr(m.note)}</small>` : ""}${blocCorrection(m)}</td>
+      <td class="fr"><button class="mini drapeau" data-signaler="${MOTS.indexOf(m)}" title="Signaler une erreur" aria-label="Signaler une erreur">⚑</button>${m.fr}${m.verifier ? ' <span class="badge">à vérifier</span>' : ""}${m.racine ? `<br><small>racine : ${m.racine}</small>` : ""}${m.note ? `<br><small>${afficheAr(m.note)}</small>` : ""}${blocCorrection(m)}</td>
       <td class="tr" data-label="Translit."><i>${m.tr || ""}</i></td>
       ${cell("Masculin", m.m)}${cell("Féminin", m.f)}${cell(m.du_f ? "Duel masc." : "Duel", m.du)}${cell("Duel fém.", m.du_f)}${cell(m.pl_f ? "Pluriel masc." : "Pluriel", m.pl)}${cell("Pluriel fém.", m.pl_f)}
       <td class="meta" data-label="Catégorie">${m.cat}</td>

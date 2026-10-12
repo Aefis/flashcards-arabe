@@ -31,10 +31,16 @@ Quand l'utilisateur demande de lancer l'extraction :
      toujours la forme correcte ; si les notes diffèrent, mettre la version écrite dans `ecrit`
      et une courte explication en français dans `corr` (affichée sur la carte, encadré « Corrigé »).
    - Duel « de base » au nominatif (ـَانِ), pluriel au nominatif.
+   - Tous les verbes vont dans la catégorie `Verbes`, avec leur `racine` (ex. "ك ت ب").
+   - Après les ajouts, `node outils/regrouper.js` retrie le fichier par catégorie.
 5. Ajouter les nouveaux fichiers à `FICHIERS_TRAITES` (même ceux sans mots utiles), avec leur cours :
    `"<nom du fichier>": "Cours N"`. Pour trouver N, dans l'ordre : le sous-dossier
    (`photo du cours/Cours 3/…`), la mention manuscrite sur le document (« Cours 3 »),
    sinon demander à l'utilisateur. Le site regroupe les mots par cours grâce à cette table.
+   Un document qui couvre plusieurs cours (ex. un Word avec « الدرس الثاني » puis « الدرس الثالث ») est enregistré
+   par section : `"<fichier>#<titre de section>": "Cours N"`, et les mots citent cette section dans `src`.
+   Un fichier est « déjà traité » si son nom apparaît dans une clé de `FICHIERS_TRAITES`, avec ou sans `#section`.
+   Pour un .docx, extraire le texte de `word/document.xml` (archive zip).
 6. Vérifier : `node outils/verifier.js` (doit afficher le nombre de mots par cours, sans erreur).
 7. Déployer (voir ci-dessous).
 8. Résumer en français : nombre de mots ajoutés par fichier, corrections d'orthographe et lectures « à vérifier ».
