@@ -14,7 +14,10 @@ const stock = {
 MOTS.forEach((m) => {
   m.id = sansHarakat(m.ar) + "|" + m.fr;
   if (m.f && !m.m) m.m = m.ar;
-  m.cours = [...new Set(m.src.map((f) => FICHIERS_TRAITES[f] || "Sans cours"))];
+  // Un mot appartient au cours où il a été vu pour la première fois ;
+  // s'il revient dans un cours suivant, il garde ce premier cours (le fichier reste dans « src »).
+  m.cours = [m.src.map((f) => FICHIERS_TRAITES[f] || "Sans cours")
+    .sort((a, b) => a.localeCompare(b, "fr", { numeric: true }))[0]];
 });
 
 // Tri naturel : "Cours 2" avant "Cours 10"

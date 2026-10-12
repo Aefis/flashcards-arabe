@@ -21,7 +21,8 @@ MOTS.forEach((m, i) => {
   const cle = m.ar.replace(/[ً-ْٰ]/g, "") + "|" + m.fr;
   if (vus.has(cle)) erreurs.push(`${ref} : doublon`);
   vus.add(cle);
-  const cours = [...new Set((m.src || []).map((f) => FICHIERS_TRAITES[f]))].join(" + ");
+  // Premier cours où le mot apparaît (même règle que app.js)
+  const cours = (m.src || []).map((f) => FICHIERS_TRAITES[f]).sort((a, b) => String(a).localeCompare(b, "fr", { numeric: true }))[0];
   parCours[cours] = (parCours[cours] || 0) + 1;
 });
 

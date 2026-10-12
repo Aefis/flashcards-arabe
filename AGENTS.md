@@ -26,7 +26,9 @@ Quand l'utilisateur demande de lancer l'extraction :
    - `tr` si une translittération figure sur le document.
    - `m`/`f`/`du`/`pl` quand c'est pertinent (noms, adjectifs, métiers). Compléter les formes manquantes selon la grammaire standard.
    - `verifier: true` + une `note` si la lecture est incertaine.
-   - Si le mot existe déjà : ajouter le fichier à son `src` au lieu de créer un doublon.
+   - Si le mot existe déjà : ajouter le fichier à son `src` au lieu de créer un doublon. Le mot reste dans le
+     cours où il a été vu **pour la première fois** (le site prend le plus petit numéro de cours parmi ses sources) :
+     un mot déjà appris ne compte jamais comme nouveau mot d'un cours suivant.
    - **Vérifier l'orthographe** (les notes manuscrites peuvent contenir des fautes) : `ar` contient
      toujours la forme correcte ; si les notes diffèrent, mettre la version écrite dans `ecrit`
      et une courte explication en français dans `corr` (affichée sur la carte, encadré « Corrigé »).
