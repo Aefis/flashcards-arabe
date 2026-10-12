@@ -52,7 +52,7 @@ const MOTS = [
   { ar: "دَخَلَ", fr: "entrer (il est entré)", tr: "dakhala", cat: "Verbes", racine: "د خ ل", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
   { ar: "ذَابَ", fr: "fondre (il a fondu)", tr: "dhāba", cat: "Verbes", racine: "ذ و ب", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
   { ar: "بَرَدَ", fr: "se refroidir", tr: "barada", cat: "Verbes", racine: "ب ر د", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
-  { ar: "حَدَّدْتُ", fr: "j'ai précisé, défini", cat: "Verbes", racine: "ح د د", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
+  { ar: "حَدَّدْتُ", fr: "j'ai précisé", cat: "Verbes", racine: "ح د د", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
   { ar: "أُحِبُّ", fr: "j'aime", cat: "Verbes", racine: "ح ب ب", note: "أَنَا أُحِبُّ = moi, j'aime", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg"] },
   { ar: "يَبْنِي", fr: "il construit", cat: "Verbes", racine: "ب ن ي", note: "maçon : بَنَّاءٌ ; passé : بَنَى (il a construit)", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (1).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني"] },
   { ar: "بَنَى", fr: "il a construit", cat: "Verbes", racine: "ب ن ي", note: "présent : يَبْنِي ; maçon : بَنَّاءٌ ; bâtiment : بِنَايَةٌ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني"] },
