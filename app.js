@@ -108,7 +108,7 @@ function afficherCarte() {
 }
 
 // Formes : tableau Masculin / Féminin × Singulier / Duel / Pluriel quand le mot a un féminin,
-// sinon simple liste Duel / Pluriel.
+// sinon simple liste Duel / Pluriel (ou Présent pour un verbe).
 function tableauFormes(m) {
   const forme = (v) => v ? `<span lang="ar">${afficheAr(v)}</span>${boutonDire(v)}` : "—";
   if (m.f) {
@@ -117,7 +117,7 @@ function tableauFormes(m) {
         .filter(([, a, b]) => a || b)
         .map(([k, a, b]) => `<tr><th>${k}</th><td>${forme(a)}</td><td>${forme(b)}</td></tr>`).join("") + "</tbody>";
   }
-  return [["Duel", m.du], ["Pluriel", m.pl]].filter(([, v]) => v)
+  return [["Présent", m.pres], ["Duel", m.du], ["Pluriel", m.pl]].filter(([, v]) => v)
     .map(([k, v]) => `<tr><th>${k}</th><td>${forme(v)}</td></tr>`).join("");
 }
 
@@ -264,7 +264,7 @@ function afficherListe() {
   $("liste-corps").innerHTML = lignes.map((m) => `
     <tr>
       <td class="ar principal"><span lang="ar">${afficheAr(m.ar)}</span>${boutonDire(m.ar)}</td>
-      <td class="fr"><button class="mini drapeau" data-signaler="${MOTS.indexOf(m)}" title="Signaler une erreur" aria-label="Signaler une erreur">⚑</button>${m.fr}${m.verifier ? ' <span class="badge">à vérifier</span>' : ""}${m.racine ? `<br><small>racine : ${m.racine}</small>` : ""}${m.note ? `<br><small>${afficheAr(m.note)}</small>` : ""}${blocCorrection(m)}</td>
+      <td class="fr"><button class="mini drapeau" data-signaler="${MOTS.indexOf(m)}" title="Signaler une erreur" aria-label="Signaler une erreur">⚑</button>${m.fr}${m.verifier ? ' <span class="badge">à vérifier</span>' : ""}${m.pres ? `<br><small>présent : <span lang="ar">${afficheAr(m.pres)}</span></small>` : ""}${m.racine ? `<br><small>racine : ${m.racine}</small>` : ""}${m.note ? `<br><small>${afficheAr(m.note)}</small>` : ""}${blocCorrection(m)}</td>
       <td class="tr" data-label="Translit."><i>${m.tr || ""}</i></td>
       ${cell("Masculin", m.m)}${cell("Féminin", m.f)}${cell(m.du_f ? "Duel masc." : "Duel", m.du)}${cell("Duel fém.", m.du_f)}${cell(m.pl_f ? "Pluriel masc." : "Pluriel", m.pl)}${cell("Pluriel fém.", m.pl_f)}
       <td class="meta" data-label="Catégorie">${m.cat}</td>

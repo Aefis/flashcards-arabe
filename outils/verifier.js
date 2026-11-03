@@ -17,6 +17,7 @@ MOTS.forEach((m, i) => {
   (m.src || []).forEach((f) => {
     if (!FICHIERS_TRAITES[f]) erreurs.push(`${ref} : source absente de FICHIERS_TRAITES : ${f}`);
   });
+  if (m.cat === "Verbes" && (!m.pres || !m.racine)) erreurs.push(`${ref} : verbe sans « pres » (présent) ou « racine »`);
   if (m.ecrit && !m.corr) erreurs.push(`${ref} : « ecrit » sans explication « corr »`);
   const cle = m.ar.replace(/[ً-ْٰ]/g, "") + "|" + m.fr;
   if (vus.has(cle)) erreurs.push(`${ref} : doublon`);

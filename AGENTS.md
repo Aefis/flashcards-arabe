@@ -33,7 +33,10 @@ Quand l'utilisateur demande de lancer l'extraction :
      toujours la forme correcte ; si les notes diffèrent, mettre la version écrite dans `ecrit`
      et une courte explication en français dans `corr` (affichée sur la carte, encadré « Corrigé »).
    - Duel « de base » au nominatif (ـَانِ), pluriel au nominatif.
-   - Tous les verbes vont dans la catégorie `Verbes`, avec leur `racine` (ex. "ك ت ب").
+   - Tous les verbes vont dans la catégorie `Verbes`, avec leur `racine` (ex. "ك ت ب"), **à la forme du dictionnaire** :
+     `ar` = passé 3ᵉ pers. masc. sing. (كَتَبَ), `pres` = présent (يَكْتُبُ), `fr` = infinitif (« écrire »).
+     Si le cours montre une forme conjuguée (أُحِبُّ, قُلْتِ…), la garder dans `note` : « vu en cours : أُحِبُّ = j'aime ».
+     Un verbe déjà présent sous une autre forme n'est pas ajouté une deuxième fois (ajouter la source).
    - Les catégories sont **thématiques** (Personnes, Nature, Maison et ville…), jamais par leçon ou par exercice :
      le cours est déjà indiqué par la source. Mots-outils (oui, où, et…) → `Petits mots et questions` ; phrases → `Phrases`.
    - Après les ajouts, `node outils/regrouper.js` retrie le fichier par catégorie.

@@ -6,6 +6,7 @@
 //    tr       : translittération (facultatif)
 //    cat      : catégorie / thème
 //    racine   : racine (3 lettres) (facultatif)
+//    pres     : verbes : présent (il…) ; pour un verbe, ar = passé « il a… » et fr = infinitif
 //    m, f     : masculin / féminin (facultatif)
 //    du       : duel (facultatif)
 //    pl       : pluriel (facultatif)
@@ -45,24 +46,24 @@ const FICHIERS_TRAITES = {
 const MOTS = [
 
   // ---- Verbes ----
-  { ar: "كَتَبَ", fr: "écrire (il a écrit)", tr: "kataba", cat: "Verbes", racine: "ك ت ب", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg"] },
-  { ar: "بَحَثَ", fr: "chercher (il a cherché)", tr: "baḥatha", cat: "Verbes", racine: "ب ح ث", note: "nom : بَحْثٌ (une recherche)", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
-  { ar: "فَتَحَ", fr: "ouvrir (il a ouvert)", tr: "fataḥa", cat: "Verbes", racine: "ف ت ح", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg"] },
-  { ar: "خَرَجَ", fr: "sortir (il est sorti)", tr: "kharadja", cat: "Verbes", racine: "خ ر ج", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
-  { ar: "دَخَلَ", fr: "entrer (il est entré)", tr: "dakhala", cat: "Verbes", racine: "د خ ل", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
-  { ar: "ذَابَ", fr: "fondre (il a fondu)", tr: "dhāba", cat: "Verbes", racine: "ذ و ب", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
-  { ar: "بَرَدَ", fr: "se refroidir", tr: "barada", cat: "Verbes", racine: "ب ر د", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
-  { ar: "حَدَّدْتُ", fr: "j'ai précisé", cat: "Verbes", racine: "ح د د", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
-  { ar: "أُحِبُّ", fr: "j'aime", cat: "Verbes", racine: "ح ب ب", note: "أَنَا أُحِبُّ = moi, j'aime ; il aime : يُحِبُّ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg"] },
-  { ar: "بَنَى", fr: "il a construit", cat: "Verbes", racine: "ب ن ي", note: "présent : يَبْنِي (il construit) ; maçon : بَنَّاءٌ ; bâtiment : بِنَايَةٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (1).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني"] },
-  { ar: "قَرَأَ", fr: "il a lu", cat: "Verbes", racine: "ق ر أ", note: "أَنْ يَقْرَأَ = (le fait) de lire ; la lecture : القِرَاءَةُ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (3).jpeg"] },
-  { ar: "فَهِمَ", fr: "il a compris", cat: "Verbes", racine: "ف ه م", note: "nom : فَهْمٌ (la compréhension)", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (1).jpeg"] },
-  { ar: "سَمِعَ", fr: "il a entendu, écouté", cat: "Verbes", racine: "س م ع", note: "مَسْمُوعٌ = entendu, écouté", src: ["WhatsApp Image 2026-10-12 at 22.58.46 (1).jpeg"] },
-  { ar: "طَلَبَ", fr: "il a demandé (réclamé)", cat: "Verbes", racine: "ط ل ب", note: "même racine que طَالِبٌ (étudiant)", src: ["WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg"] },
-  { ar: "سَأَلَ", fr: "il a demandé (posé une question)", cat: "Verbes", racine: "س أ ل", note: "سُؤَالٌ = question ; سَائِلٌ = celui qui demande", src: ["WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg"] },
-  { ar: "أَسْكُنُ", fr: "j'habite", cat: "Verbes", racine: "س ك ن", note: "سَكَنَ = il a habité, habiter", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg"] },
-  { ar: "قُلْتِ", fr: "tu as dit (à une femme)", cat: "Verbes", racine: "ق و ل", note: "قُلْتَ = tu as dit (à un homme) ; قَالَ = il a dit", ecrit: "ق ا ل", corr: "La racine de قَالَ est ق و ل : le و devient ا au passé (قَالَ), et disparaît dans قُلْتِ.", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46.jpeg"] },
-  { ar: "صَارَ", fr: "devenir (il est devenu)", cat: "Verbes", racine: "ص ي ر", note: "ص et س : comparer avec سَارَةُ ; صُورَةٌ / سُورَةٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (5).jpeg"] },
+  { ar: "كَتَبَ", fr: "écrire", tr: "kataba", cat: "Verbes", racine: "ك ت ب", pres: "يَكْتُبُ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg"] },
+  { ar: "بَحَثَ", fr: "chercher", tr: "baḥatha", cat: "Verbes", racine: "ب ح ث", pres: "يَبْحَثُ", note: "nom : بَحْثٌ (une recherche)", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
+  { ar: "فَتَحَ", fr: "ouvrir", tr: "fataḥa", cat: "Verbes", racine: "ف ت ح", pres: "يَفْتَحُ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg"] },
+  { ar: "خَرَجَ", fr: "sortir", tr: "kharadja", cat: "Verbes", racine: "خ ر ج", pres: "يَخْرُجُ", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
+  { ar: "دَخَلَ", fr: "entrer", tr: "dakhala", cat: "Verbes", racine: "د خ ل", pres: "يَدْخُلُ", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
+  { ar: "ذَابَ", fr: "fondre", tr: "dhāba", cat: "Verbes", racine: "ذ و ب", pres: "يَذُوبُ", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
+  { ar: "بَرَدَ", fr: "se refroidir", tr: "barada", cat: "Verbes", racine: "ب ر د", pres: "يَبْرُدُ", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
+  { ar: "حَدَّدَ", fr: "préciser, fixer", cat: "Verbes", racine: "ح د د", pres: "يُحَدِّدُ", note: "vu en cours : حَدَّدْتُ = j'ai précisé ; racine ح د د : حَدٌّ = limite", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
+  { ar: "أَحَبَّ", fr: "aimer", cat: "Verbes", racine: "ح ب ب", pres: "يُحِبُّ", note: "vu en cours : أَنَا أُحِبُّ = moi, j'aime", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg"] },
+  { ar: "بَنَى", fr: "construire", cat: "Verbes", racine: "ب ن ي", pres: "يَبْنِي", note: "maçon : بَنَّاءٌ ; bâtiment : بِنَايَةٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (1).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني"] },
+  { ar: "قَرَأَ", fr: "lire", cat: "Verbes", racine: "ق ر أ", pres: "يَقْرَأُ", note: "أَنْ يَقْرَأَ = (le fait) de lire ; la lecture : القِرَاءَةُ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (3).jpeg"] },
+  { ar: "فَهِمَ", fr: "comprendre", cat: "Verbes", racine: "ف ه م", pres: "يَفْهَمُ", note: "nom : فَهْمٌ (la compréhension)", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (1).jpeg"] },
+  { ar: "سَمِعَ", fr: "entendre, écouter", cat: "Verbes", racine: "س م ع", pres: "يَسْمَعُ", note: "مَسْمُوعٌ = entendu, écouté", src: ["WhatsApp Image 2026-10-12 at 22.58.46 (1).jpeg"] },
+  { ar: "طَلَبَ", fr: "demander (réclamer)", cat: "Verbes", racine: "ط ل ب", pres: "يَطْلُبُ", note: "même racine que طَالِبٌ (étudiant)", src: ["WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg"] },
+  { ar: "سَأَلَ", fr: "demander (poser une question)", cat: "Verbes", racine: "س أ ل", pres: "يَسْأَلُ", note: "سُؤَالٌ = question ; سَائِلٌ = celui qui demande", src: ["WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg"] },
+  { ar: "سَكَنَ", fr: "habiter", cat: "Verbes", racine: "س ك ن", pres: "يَسْكُنُ", note: "vu en cours : أَسْكُنُ = j'habite", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg"] },
+  { ar: "قَالَ", fr: "dire", cat: "Verbes", racine: "ق و ل", pres: "يَقُولُ", note: "vu en cours : قُلْتِ = tu as dit (à une femme) ; قُلْتَ = tu as dit (à un homme)", ecrit: "ق ا ل", corr: "La racine de قَالَ est ق و ل : le و devient ا au passé (قَالَ), et disparaît dans قُلْتِ.", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46.jpeg"] },
+  { ar: "صَارَ", fr: "devenir", cat: "Verbes", racine: "ص ي ر", pres: "يَصِيرُ", note: "ص et س : comparer avec سَارَةُ ; صُورَةٌ / سُورَةٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (5).jpeg"] },
 
   // ---- Personnes ----
   { ar: "شَبَابٌ", fr: "jeunesse", tr: "chabābun", cat: "Personnes", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg"] },
