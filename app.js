@@ -484,6 +484,8 @@ document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () 
   document.querySelectorAll(".tab").forEach((x) => x.classList.toggle("active", x === t));
   $("vue-cartes").hidden = t.dataset.vue !== "cartes";
   $("vue-liste").hidden = t.dataset.vue !== "liste";
+  $("vue-apropos").hidden = t.dataset.vue !== "apropos";
+  document.querySelector(".resume").hidden = t.dataset.vue === "apropos";
 }));
 
 document.addEventListener("keydown", (e) => {
