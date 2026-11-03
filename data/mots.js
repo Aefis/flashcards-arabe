@@ -53,15 +53,13 @@ const MOTS = [
   { ar: "ذَابَ", fr: "fondre (il a fondu)", tr: "dhāba", cat: "Verbes", racine: "ذ و ب", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
   { ar: "بَرَدَ", fr: "se refroidir", tr: "barada", cat: "Verbes", racine: "ب ر د", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
   { ar: "حَدَّدْتُ", fr: "j'ai précisé", cat: "Verbes", racine: "ح د د", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
-  { ar: "أُحِبُّ", fr: "j'aime", cat: "Verbes", racine: "ح ب ب", note: "أَنَا أُحِبُّ = moi, j'aime", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg"] },
-  { ar: "يَبْنِي", fr: "il construit", cat: "Verbes", racine: "ب ن ي", note: "maçon : بَنَّاءٌ ; passé : بَنَى (il a construit)", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (1).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني"] },
-  { ar: "بَنَى", fr: "il a construit", cat: "Verbes", racine: "ب ن ي", note: "présent : يَبْنِي ; maçon : بَنَّاءٌ ; bâtiment : بِنَايَةٌ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني"] },
+  { ar: "أُحِبُّ", fr: "j'aime", cat: "Verbes", racine: "ح ب ب", note: "أَنَا أُحِبُّ = moi, j'aime ; il aime : يُحِبُّ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg"] },
+  { ar: "بَنَى", fr: "il a construit", cat: "Verbes", racine: "ب ن ي", note: "présent : يَبْنِي (il construit) ; maçon : بَنَّاءٌ ; bâtiment : بِنَايَةٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (1).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني"] },
   { ar: "قَرَأَ", fr: "il a lu", cat: "Verbes", racine: "ق ر أ", note: "أَنْ يَقْرَأَ = (le fait) de lire ; la lecture : القِرَاءَةُ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (3).jpeg"] },
   { ar: "فَهِمَ", fr: "il a compris", cat: "Verbes", racine: "ف ه م", note: "nom : فَهْمٌ (la compréhension)", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (1).jpeg"] },
   { ar: "سَمِعَ", fr: "il a entendu, écouté", cat: "Verbes", racine: "س م ع", note: "مَسْمُوعٌ = entendu, écouté", src: ["WhatsApp Image 2026-10-12 at 22.58.46 (1).jpeg"] },
   { ar: "طَلَبَ", fr: "il a demandé (réclamé)", cat: "Verbes", racine: "ط ل ب", note: "même racine que طَالِبٌ (étudiant)", src: ["WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg"] },
   { ar: "سَأَلَ", fr: "il a demandé (posé une question)", cat: "Verbes", racine: "س أ ل", note: "سُؤَالٌ = question ; سَائِلٌ = celui qui demande", src: ["WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg"] },
-  { ar: "يُحِبُّ", fr: "il aime", cat: "Verbes", racine: "ح ب ب", note: "أُحِبُّ = j'aime", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
   { ar: "أَسْكُنُ", fr: "j'habite", cat: "Verbes", racine: "س ك ن", note: "سَكَنَ = il a habité, habiter", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg"] },
   { ar: "قُلْتِ", fr: "tu as dit (à une femme)", cat: "Verbes", racine: "ق و ل", note: "قُلْتَ = tu as dit (à un homme) ; قَالَ = il a dit", ecrit: "ق ا ل", corr: "La racine de قَالَ est ق و ل : le و devient ا au passé (قَالَ), et disparaît dans قُلْتِ.", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46.jpeg"] },
   { ar: "صَارَ", fr: "devenir (il est devenu)", cat: "Verbes", racine: "ص ي ر", note: "ص et س : comparer avec سَارَةُ ; صُورَةٌ / سُورَةٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (5).jpeg"] },
@@ -88,7 +86,6 @@ const MOTS = [
   { ar: "تَحَدُّثٌ", fr: "le fait de parler, conversation", cat: "Exercice d'écriture", racine: "ح د ث", note: "verbe : تَحَدَّثَ (il a parlé)", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
 
   // ---- Loisirs ----
-  { ar: "الهِوَايَاتُ", fr: "les loisirs / les hobbies", cat: "Loisirs", note: "singulier : هِوَايَةٌ (un loisir, un hobby)", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
   { ar: "القِرَاءَةُ", fr: "la lecture", cat: "Loisirs", racine: "ق ر أ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (3).jpeg"] },
   { ar: "الرِّيَاضَةُ", fr: "le sport", cat: "Loisirs", pl: "الرِّيَاضَاتُ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
   { ar: "الرَّسْمُ", fr: "le dessin", cat: "Loisirs", pl: "الرُّسُومُ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
@@ -98,7 +95,7 @@ const MOTS = [
   { ar: "السِّبَاحَةُ", fr: "la natation", cat: "Loisirs", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (3).jpeg"] },
   { ar: "التَّصْوِيرُ", fr: "la photographie", cat: "Loisirs", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
   { ar: "السِّينَمَا", fr: "le cinéma", cat: "Loisirs", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
-  { ar: "هِوَايَةٌ", fr: "loisir, hobby", cat: "Loisirs", du: "هِوَايَتَانِ", pl: "هِوَايَاتٌ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
+  { ar: "هِوَايَةٌ", fr: "loisir, hobby", cat: "Loisirs", du: "هِوَايَتَانِ", pl: "هِوَايَاتٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
 
   // ---- Métiers ----
   { ar: "مُعَلِّمٌ", fr: "enseignant(e)", cat: "Métiers", m: "مُعَلِّمٌ", f: "مُعَلِّمَةٌ", du: "مُعَلِّمَانِ", du_f: "مُعَلِّمَتَانِ", pl: "مُعَلِّمُونَ", pl_f: "مُعَلِّمَاتٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (3).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني"] },
@@ -129,8 +126,8 @@ const MOTS = [
   { ar: "اللُّغَةُ الفُصْحَى", fr: "l'arabe classique (fuṣḥā)", cat: "École et études", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg"] },
 
   // ---- Maison ----
-  { ar: "دَارٌ", fr: "maison", tr: "dārun", cat: "Maison", du: "دَارَانِ", pl: "دُورٌ", note: "دَارِي = ma maison ; synonymes : بَيْتٌ، مَنْزِلٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg"] },
-  { ar: "بَيْتٌ", fr: "maison", cat: "Maison", du: "بَيْتَانِ", pl: "بُيُوتٌ", note: "بَيْتِي = ma maison ; synonymes : مَنْزِلٌ، دَارٌ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (1).jpeg","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg"] },
+  { ar: "دَارٌ", fr: "maison (دَار)", tr: "dārun", cat: "Maison", du: "دَارَانِ", pl: "دُورٌ", note: "دَارِي = ma maison ; synonymes : بَيْتٌ، مَنْزِلٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg"] },
+  { ar: "بَيْتٌ", fr: "maison (بَيْت)", cat: "Maison", du: "بَيْتَانِ", pl: "بُيُوتٌ", note: "بَيْتِي = ma maison ; synonymes : مَنْزِلٌ، دَارٌ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (1).jpeg","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg"] },
   { ar: "مَنْزِلٌ", fr: "maison, domicile", cat: "Maison", du: "مَنْزِلَانِ", pl: "مَنَازِلُ", note: "مَنْزِلِي = ma maison", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg"] },
 
   // ---- Personnes ----
