@@ -37,7 +37,7 @@ Quand l'utilisateur demande de lancer l'extraction :
      `ar` = passé 3ᵉ pers. masc. sing. (كَتَبَ), `pres` = présent (يَكْتُبُ), `fr` = infinitif (« écrire »).
      Si le cours montre une forme conjuguée (أُحِبُّ, قُلْتِ…), la garder dans `note` : « vu en cours : أُحِبُّ = j'aime ».
      Un verbe déjà présent sous une autre forme n'est pas ajouté une deuxième fois (ajouter la source).
-   - Les catégories sont **thématiques** (Personnes, Nature, Maison et ville…), jamais par leçon ou par exercice :
+   - Les catégories sont **thématiques** (liste dans `ordreCat` de `outils/regrouper.js` ; en réutiliser une), jamais par leçon ou par exercice :
      le cours est déjà indiqué par la source. Mots-outils (oui, où, et…) → `Petits mots et questions` ; phrases → `Phrases`.
    - Après les ajouts, `node outils/regrouper.js` retrie le fichier par catégorie.
 5. Ajouter les nouveaux fichiers à `FICHIERS_TRAITES` (même ceux sans mots utiles), avec leur cours :
