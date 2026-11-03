@@ -80,7 +80,7 @@ const MOTS = [
   { ar: "شَبَابٌ", fr: "jeunesse", tr: "chabābun", cat: "Personnes", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg"] },
   { ar: "بِنْتٌ", fr: "fille", tr: "bintun", cat: "Personnes", du: "بِنْتَانِ", pl: "بَنَاتٌ", note: "masculin : اِبْنٌ (fils), pl. أَبْنَاءٌ ; بِنْتِي = ma fille ; بِنْتٌ جَمِيلَةٌ = une belle fille", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (3).jpeg","WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg"] },
   { ar: "فَتَاةٌ", fr: "jeune fille", tr: "fatātun", cat: "Personnes", du: "فَتَاتَانِ", pl: "فَتَيَاتٌ", note: "masculin : فَتًى (jeune homme), pl. فِتْيَانٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg"] },
-  { ar: "حَبِيبٌ", fr: "ami, bien-aimé", tr: "ḥabībun", cat: "Personnes", m: "حَبِيبٌ", f: "حَبِيبَةٌ", du: "حَبِيبَانِ", du_f: "حَبِيبَتَانِ", pl: "أَحِبَّاءُ", pl_f: "حَبِيبَاتٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg"] },
+  { ar: "حَبِيبٌ", fr: "ami, bien-aimé", tr: "ḥabībun", cat: "Personnes", m: "حَبِيبٌ", f: "حَبِيبَةٌ", du: "حَبِيبَانِ", du_f: "حَبِيبَتَانِ", pl: "أَحِبَّاءُ", pl_f: "حَبِيبَاتٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg","WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
   { ar: "وَلَدٌ", fr: "garçon ; fils", cat: "Personnes", du: "وَلَدَانِ", pl: "أَوْلَادٌ", note: "féminin : بِنْتٌ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (3).jpeg","WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg"] },
   { ar: "اِمْرَأَةٌ", fr: "femme", cat: "Personnes", du: "اِمْرَأَتَانِ", pl: "نِسَاءٌ", note: "اِمْرَأَةٌ جَمِيلَةٌ = une belle femme ; masculin : رَجُلٌ (homme)", ecrit: "إِمْرَأَة", corr: "اِمْرَأَة commence par une hamzat al-waṣl : pas de hamza (ء) sous l'alif.", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg"] },
   { ar: "سَارَةُ", fr: "Sara (prénom)", cat: "Personnes", note: "ص / س : comparer avec صَارَ", verifier: true, ecrit: "سَار", corr: "Le prénom Sara prend un ة final : سَارَة. Sans ة, سَارَ veut dire « il a marché ».", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (5).jpeg"] },
@@ -101,11 +101,12 @@ const MOTS = [
   { ar: "تِلْمِيذٌ", fr: "élève", cat: "Métiers", m: "تِلْمِيذٌ", f: "تِلْمِيذَةٌ", du: "تِلْمِيذَانِ", du_f: "تِلْمِيذَتَانِ", pl: "تَلَامِيذُ", pl_f: "تِلْمِيذَاتٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (3).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني"] },
   { ar: "مُسْتَشَارٌ", fr: "conseiller, consultant", cat: "Métiers", m: "مُسْتَشَارٌ", f: "مُسْتَشَارَةٌ", du: "مُسْتَشَارَانِ", du_f: "مُسْتَشَارَتَانِ", pl: "مُسْتَشَارُونَ", pl_f: "مُسْتَشَارَاتٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (3).jpeg","WhatsApp Image 2026-10-09 at 13.32.51 (1).jpeg"] },
   { ar: "كَاتِبٌ", fr: "écrivain(e)", cat: "Métiers", racine: "ك ت ب", m: "كَاتِبٌ", f: "كَاتِبَةٌ", du: "كَاتِبَانِ", du_f: "كَاتِبَتَانِ", pl: "كُتَّابٌ", pl_f: "كَاتِبَاتٌ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني","WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg"] },
+  { ar: "خَبِيرٌ", fr: "expert", cat: "Métiers", m: "خَبِيرٌ", f: "خَبِيرَةٌ", du: "خَبِيرَانِ", du_f: "خَبِيرَتَانِ", pl: "خُبَرَاءُ", pl_f: "خَبِيرَاتٌ", note: "exercice « formez des mots » (Leçon 2)", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
 
   // ---- École et études ----
   { ar: "كِتَابَةٌ", fr: "écriture", tr: "kitābatun", cat: "École et études", racine: "ك ت ب", pl: "كِتَابَاتٌ", note: "ة (t fermé) en finale", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (1).jpeg"] },
   { ar: "بَحْثٌ", fr: "recherche (chercher)", cat: "École et études", racine: "ب ح ث", pl: "بُحُوثٌ / أَبْحَاثٌ", note: "verbe : بَحَثَ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث"] },
-  { ar: "كِتَابٌ", fr: "livre", cat: "École et études", racine: "ك ت ب", du: "كِتَابَانِ", pl: "كُتُبٌ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني","WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg"] },
+  { ar: "كِتَابٌ", fr: "livre", cat: "École et études", racine: "ك ت ب", du: "كِتَابَانِ", pl: "كُتُبٌ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني","WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg","WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
   { ar: "مَكْتَبٌ", fr: "bureau", cat: "École et études", racine: "ك ت ب", du: "مَكْتَبَانِ", pl: "مَكَاتِبُ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني","WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg","WhatsApp Image 2026-11-03 at 21.00.27 (4).jpeg"] },
   { ar: "مَكْتَبَةٌ", fr: "bibliothèque, librairie", cat: "École et études", racine: "ك ت ب", du: "مَكْتَبَتَانِ", pl: "مَكْتَبَاتٌ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (3).jpeg","WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg"] },
   { ar: "مَدْرَسَةٌ", fr: "école", cat: "École et études", racine: "د ر س", du: "مَدْرَسَتَانِ", pl: "مَدَارِسُ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني","WhatsApp Image 2026-10-12 at 22.58.46.jpeg"] },
@@ -141,6 +142,7 @@ const MOTS = [
   { ar: "عَكْسٌ", fr: "contraire", cat: "Langue et grammaire", note: "مَا هُوَ العَكْسُ؟ = quel est le contraire ?", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg"] },
   { ar: "سُكُونٌ", fr: "soukoun (absence de voyelle, signe ـْ)", cat: "Langue et grammaire", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (5).jpeg"] },
   { ar: "يَلْبَسُ النَّاسُ / النَّاسُ يَلْبَسُونَ", fr: "les gens portent (s'habillent)", cat: "Langue et grammaire", note: "verbe avant le sujet : toujours au singulier (يَلْبَسُ) ; verbe après le sujet : accordé au pluriel (يَلْبَسُونَ)", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (1).jpeg"] },
+  { ar: "مَا + verbe au passé", fr: "ne… pas (au passé)", cat: "Langue et grammaire", note: "la négation : لَا + verbe au présent ; لَيْسَ + adjectif ou nom (لَيْسَ جَمِيلًا) ; مَا + verbe au passé (مَا ذَهَبَ = il n'est pas allé)", src: ["WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg"] },
 
   // ---- Maison et ville ----
   { ar: "بَابٌ", fr: "porte", tr: "bābun", cat: "Maison et ville", du: "بَابَانِ", pl: "أَبْوَابٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg"] },
@@ -150,6 +152,8 @@ const MOTS = [
   { ar: "مَنْزِلٌ", fr: "maison, domicile", cat: "Maison et ville", du: "مَنْزِلَانِ", pl: "مَنَازِلُ", note: "مَنْزِلِي = ma maison", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg","WhatsApp Image 2026-11-03 at 21.00.27 (4).jpeg"] },
   { ar: "مَخْبَزٌ", fr: "boulangerie", cat: "Maison et ville", racine: "خ ب ز", pl: "مَخَابِزُ", note: "pain : خُبْزٌ ; boulanger : خَبَّازٌ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني"] },
   { ar: "جَامِعٌ", fr: "mosquée", cat: "Maison et ville", du: "جَامِعَانِ", pl: "جَوَامِعُ", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (4).jpeg"] },
+  { ar: "حُجْرَةٌ", fr: "chambre, pièce", cat: "Maison et ville", du: "حُجْرَتَانِ", pl: "حُجُرَاتٌ / حُجَرٌ", note: "exercice « formez des mots » (Leçon 2)", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
+  { ar: "دَرَجٌ", fr: "escalier", cat: "Maison et ville", pl: "أَدْرَاجٌ", note: "exercice « formez des mots » (Leçon 2)", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
 
   // ---- Objets ----
   { ar: "تَذْكِرَةٌ", fr: "billet, ticket", tr: "tadhkiratun", cat: "Objets", du: "تَذْكِرَتَانِ", pl: "تَذَاكِرُ", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
@@ -161,16 +165,20 @@ const MOTS = [
   { ar: "ثَمَرٌ", fr: "fruits", tr: "thamarun", cat: "Nourriture", pl: "ثِمَارٌ", note: "nom collectif ; un fruit : ثَمَرَةٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg"] },
   { ar: "خُوخٌ", fr: "pêches", tr: "khūkhun", cat: "Nourriture", note: "nom collectif ; une pêche : خَوْخَةٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
   { ar: "مَوْزٌ", fr: "bananes", cat: "Nourriture", note: "nom collectif ; une banane : مَوْزَةٌ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (3).jpeg","WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg","WhatsApp Image 2026-11-03 at 21.00.27 (4).jpeg"] },
+  { ar: "خُبْزٌ", fr: "pain", cat: "Nourriture", note: "exercice « formez des mots » (Leçon 2) ; boulangerie : مَخْبَزٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
+  { ar: "ذُرَةٌ", fr: "maïs", cat: "Nourriture", note: "exercice « formez des mots » (Leçon 2)", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
 
   // ---- Animaux ----
   { ar: "جَمَلٌ", fr: "chameau", cat: "Animaux", du: "جَمَلَانِ", pl: "جِمَالٌ", note: "femelle : نَاقَةٌ ; ne pas confondre avec جُمَلٌ (phrases)", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg","WhatsApp Image 2026-11-03 at 21.00.27 (4).jpeg"] },
   { ar: "نَاقَةٌ", fr: "chamelle", cat: "Animaux", du: "نَاقَتَانِ", pl: "نُوقٌ", note: "mâle : جَمَلٌ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg"] },
   { ar: "أَسَدٌ", fr: "lion", cat: "Animaux", du: "أَسَدَانِ", pl: "أُسُودٌ", note: "femelle : لَبُؤَةٌ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg","WhatsApp Image 2026-11-03 at 21.00.27 (4).jpeg"] },
   { ar: "لَبُؤَةٌ", fr: "lionne", cat: "Animaux", du: "لَبُؤَتَانِ", pl: "لَبُؤَاتٌ", note: "mâle : أَسَدٌ", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg","WhatsApp Image 2026-11-03 at 21.00.27 (4).jpeg"] },
+  { ar: "دَجَاجَةٌ", fr: "poule", cat: "Animaux", du: "دَجَاجَتَانِ", pl: "دَجَاجٌ", note: "exercice « formez des mots » (Leçon 2) ; دَجَاجٌ = des poules, du poulet", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
 
   // ---- Vêtements ----
   { ar: "مِعْطَفٌ", fr: "manteau", cat: "Vêtements", du: "مِعْطَفَانِ", pl: "مَعَاطِفُ", ecrit: "مَعْطَف", corr: "Le م prend une kasra : مِعْطَفٌ (mi‘ṭaf).", src: ["WhatsApp Image 2026-11-03 at 21.00.26.jpeg","WhatsApp Image 2026-11-03 at 21.00.27 (2).jpeg"] },
   { ar: "شُورْتٌ", fr: "short", cat: "Vêtements", note: "mot emprunté à l'anglais", src: ["WhatsApp Image 2026-11-03 at 21.00.26.jpeg","WhatsApp Image 2026-11-03 at 21.00.27 (2).jpeg"] },
+  { ar: "بَدْلَةٌ", fr: "costume (vêtement)", cat: "Vêtements", du: "بَدْلَتَانِ", pl: "بَدَلَاتٌ", note: "exercice « formez des mots » (Leçon 2)", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
 
   // ---- Nature ----
   { ar: "ثَلْجٌ", fr: "neige", tr: "thaldjun", cat: "Nature", pl: "ثُلُوجٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg"] },
@@ -179,6 +187,7 @@ const MOTS = [
   { ar: "شَمْسٌ", fr: "soleil", cat: "Nature", pl: "شُمُوسٌ", note: "شَمْسِيٌّ = solaire (lettres solaires) ; mot féminin : شَمْسٌ جَمِيلَةٌ (un beau soleil)", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg","WhatsApp Image 2026-11-03 at 21.00.27 (4).jpeg"] },
   { ar: "قَمَرٌ", fr: "lune", cat: "Nature", du: "قَمَرَانِ", pl: "أَقْمَارٌ", note: "قَمَرِيٌّ = lunaire (lettres lunaires) ; mot masculin : قَمَرٌ جَمِيلٌ (une belle lune)", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (4).jpeg","WhatsApp Image 2026-11-03 at 21.00.27 (4).jpeg"] },
   { ar: "سَمَاءٌ", fr: "ciel", cat: "Nature", pl: "سَمَاوَاتٌ", note: "hamza seule en fin de mot ; avec شَمْسٌ et قَمَرٌ", verifier: true, src: ["WhatsApp Image 2026-10-09 at 13.32.51 (5).jpeg"] },
+  { ar: "جَبَلٌ", fr: "montagne", cat: "Nature", du: "جَبَلَانِ", pl: "جِبَالٌ", note: "exercice « formez des mots » (Leçon 2)", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
 
   // ---- Temps et saisons ----
   { ar: "فَصْلٌ", fr: "saison", cat: "Temps et saisons", du: "فَصْلَانِ", pl: "فُصُولٌ", note: "veut aussi dire : trimestre, période ; classe (salle)", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (3).jpeg","WhatsApp Image 2026-11-03 at 21.00.26.jpeg","WhatsApp Image 2026-11-03 at 21.00.27.jpeg"] },
@@ -200,12 +209,14 @@ const MOTS = [
   // ---- Nombres ----
   { ar: "وَاحِدٌ", fr: "un (1)", cat: "Nombres", m: "وَاحِدٌ", f: "وَاحِدَةٌ", note: "ordinal : الأَوَّلُ (le premier)", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (5).jpeg"] },
   { ar: "اِثْنَانِ", fr: "deux (2)", cat: "Nombres", m: "اِثْنَانِ", f: "اِثْنَتَانِ", ecrit: "إِثْنَيْن", corr: "Pas de hamza : le alif est un alif de liaison (اِثْنَانِ). اِثْنَيْنِ est la forme après une préposition ou en complément ; la forme de base est اِثْنَانِ.", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (5).jpeg"] },
-  { ar: "ثَلَاثَةٌ", fr: "trois (3)", cat: "Nombres", m: "ثَلَاثَةٌ", f: "ثَلَاثٌ", note: "avec un nom masculin, le nombre prend ة : ثَلَاثَةُ شُهُورٍ (trois mois)", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (5).jpeg","WhatsApp Image 2026-11-03 at 21.00.27.jpeg"] },
+  { ar: "ثَلَاثَةٌ", fr: "trois (3)", cat: "Nombres", m: "ثَلَاثَةٌ", f: "ثَلَاثٌ", note: "avec un nom masculin, le nombre prend ة : ثَلَاثَةُ شُهُورٍ (trois mois)", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (5).jpeg","WhatsApp Image 2026-11-03 at 21.00.27.jpeg","WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
   { ar: "أَرْبَعَةٌ", fr: "quatre (4)", cat: "Nombres", m: "أَرْبَعَةٌ", f: "أَرْبَعٌ", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (5).jpeg"] },
   { ar: "الأَوَّلُ", fr: "le premier", cat: "Nombres", m: "الأَوَّلُ", f: "الأُولَى", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (5).jpeg"] },
   { ar: "الثَّانِي", fr: "le deuxième", cat: "Nombres", m: "الثَّانِي", f: "الثَّانِيَةُ", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (5).jpeg"] },
   { ar: "الثَّالِثُ", fr: "le troisième", cat: "Nombres", m: "الثَّالِثُ", f: "الثَّالِثَةُ", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (5).jpeg"] },
   { ar: "الرَّابِعُ", fr: "le quatrième", cat: "Nombres", m: "الرَّابِعُ", f: "الرَّابِعَةُ", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (5).jpeg"] },
+  { ar: "عِشْرُونَ", fr: "vingt (20)", cat: "Nombres", note: "اِثْنَتَانِ وَعِشْرُونَ دَوْلَةً = vingt-deux pays", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (4).jpeg"] },
+  { ar: "سَبْعَةٌ", fr: "sept (7)", cat: "Nombres", m: "سَبْعَةٌ", f: "سَبْعٌ", note: "avec un nom féminin : سَبْعُ قَارَّاتٍ (sept continents)", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (2).jpeg"] },
 
   // ---- Adjectifs ----
   { ar: "كَثِيرٌ", fr: "nombreux", tr: "kathīrun", cat: "Adjectifs", m: "كَثِيرٌ", f: "كَثِيرَةٌ", du: "كَثِيرَانِ", du_f: "كَثِيرَتَانِ", pl: "كَثِيرُونَ", pl_f: "كَثِيرَاتٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (1).jpeg"] },
@@ -288,6 +299,8 @@ const MOTS = [
   { ar: "ثَلَاثَةُ شُهُورٍ", fr: "trois mois", cat: "Phrases", note: "on dit aussi ثَلَاثَةُ أَشْهُرٍ", src: ["WhatsApp Image 2026-11-03 at 21.00.27.jpeg"] },
   { ar: "فِي الصَّبَاحِ يَلْبَسُ النَّاسُ قَبْلَ الخُرُوجِ إِلَى المَدْرَسَةِ", fr: "le matin, les gens s'habillent avant de partir à l'école", cat: "Phrases", note: "dictée", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (2).jpeg"] },
   { ar: "فِي فَصْلِ الشِّتَاءِ يَلْبَسُ النَّاسُ المِعْطَفَ، أَمَّا فِي فَصْلِ الصَّيْفِ فَيَلْبَسُونَ الشُّورْتَ", fr: "en hiver, les gens portent un manteau ; en été, par contre, ils portent un short", cat: "Phrases", note: "dictée", ecrit: "فَيَلْبَسْنَ", corr: "النَّاسُ est masculin pluriel : فَيَلْبَسُونَ. يَلْبَسْنَ est le féminin pluriel (« elles portent »).", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (2).jpeg"] },
+  { ar: "سَبْعُ قَارَّاتٍ", fr: "sept continents", cat: "Phrases", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (2).jpeg"] },
+  { ar: "مَا هُوَ العَكْسُ؟", fr: "quel est le contraire ?", cat: "Phrases", note: "مَا هُوَ عَكْسُ كَبِيرٍ؟ – صَغِيرٌ", src: ["WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg"] },
 
   // ---- Pays arabes ----
   { ar: "دَوْلَةٌ", fr: "pays, État", cat: "Pays arabes", du: "دَوْلَتَانِ", pl: "دُوَلٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (4).jpeg"] },
@@ -319,9 +332,9 @@ const MOTS = [
 
   // ---- Continents et pays du monde ----
   { ar: "بَلَدٌ", fr: "pays", tr: "baladun", cat: "Continents et pays du monde", du: "بَلَدَانِ", pl: "بِلَادٌ", src: ["WhatsApp Image 2026-10-09 at 13.32.50.jpeg"] },
-  { ar: "قَارَّةٌ", fr: "continent", cat: "Continents et pays du monde", du: "قَارَّتَانِ", pl: "قَارَّاتٌ", note: "سِتُّ قَارَّاتٍ = six continents", ecrit: "سِتَّة قَارَّات", corr: "قَارَّة est féminin : de 3 à 10, le nombre prend le genre inverse → سِتُّ قَارَّاتٍ (et non سِتَّة).", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (2).jpeg"] },
-  { ar: "إِفْرِيقِيَا", fr: "Afrique", cat: "Continents et pays du monde", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (2).jpeg"] },
-  { ar: "آسِيَا", fr: "Asie", cat: "Continents et pays du monde", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (2).jpeg"] },
+  { ar: "قَارَّةٌ", fr: "continent", cat: "Continents et pays du monde", du: "قَارَّتَانِ", pl: "قَارَّاتٌ", note: "سِتُّ قَارَّاتٍ = six continents", ecrit: "سِتَّة قَارَّات", corr: "قَارَّة est féminin : de 3 à 10, le nombre prend le genre inverse → سِتُّ قَارَّاتٍ (et non سِتَّة).", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (2).jpeg","WhatsApp Image 2026-10-09 at 13.32.51 (3).jpeg"] },
+  { ar: "إِفْرِيقِيَا", fr: "Afrique", cat: "Continents et pays du monde", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (2).jpeg","WhatsApp Image 2026-10-09 at 13.32.51 (3).jpeg"] },
+  { ar: "آسِيَا", fr: "Asie", cat: "Continents et pays du monde", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (2).jpeg","WhatsApp Image 2026-10-09 at 13.32.51 (3).jpeg"] },
   { ar: "أُسْتُرَالِيَا", fr: "Australie (Océanie)", cat: "Continents et pays du monde", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (2).jpeg"] },
   { ar: "أُورُوبَّا", fr: "Europe", cat: "Continents et pays du monde", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (2).jpeg"] },
   { ar: "أَمْرِيكَا الشَّمَالِيَّةُ", fr: "Amérique du Nord", cat: "Continents et pays du monde", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني"] },
