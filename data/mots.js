@@ -257,6 +257,12 @@ const MOTS = [
   { ar: "عِنْدَهُ", fr: "il a (chez lui)", cat: "Petits mots et questions", note: "synonyme : لَدَيْهِ", src: ["WhatsApp Image 2026-11-03 at 21.00.27.jpeg"] },
   { ar: "الآنَ", fr: "maintenant", cat: "Petits mots et questions", src: ["WhatsApp Image 2026-11-03 at 21.00.26.jpeg"] },
   { ar: "اليَوْمَ", fr: "aujourd'hui", cat: "Petits mots et questions", note: "اليَوْمُ = le jour", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (5).jpeg"] },
+  { ar: "فِي", fr: "dans, à, en", cat: "Petits mots et questions", note: "فِي المَدْرَسَةِ = à l'école ; فِي الصَّبَاحِ = le matin", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (1).jpeg","WhatsApp Image 2026-11-03 at 21.00.27 (2).jpeg","WhatsApp Image 2026-11-03 at 21.00.26.jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46.jpeg","WhatsApp Image 2026-10-12 at 22.58.46 (1).jpeg"] },
+  { ar: "إِلَى", fr: "vers, à (direction)", cat: "Petits mots et questions", note: "ذَهَبَ إِلَى المَدْرَسَةِ = il est allé à l'école", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني","WhatsApp Image 2026-11-03 at 21.00.27 (2).jpeg"] },
+  { ar: "هُوَ", fr: "il ; lui (c'est)", cat: "Petits mots et questions", note: "féminin : هِيَ ; اليَوْمَ هُوَ… = aujourd'hui, c'est…", src: ["دروس اللغّة العربيّة مع رغد.docx#الدرس الثاني","WhatsApp Image 2026-11-03 at 21.00.27 (5).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg","WhatsApp Image 2026-11-03 at 21.00.26.jpeg"] },
+  { ar: "أَنَا", fr: "je, moi", cat: "Petits mots et questions", src: ["WhatsApp Image 2026-10-09 at 13.32.50 (2).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46 (2).jpeg","WhatsApp Image 2026-10-12 at 22.58.46.jpeg","WhatsApp Image 2026-10-12 at 22.58.46 (1).jpeg"] },
+  { ar: "أَنْتَ", fr: "tu, toi (à un homme)", cat: "Petits mots et questions", m: "أَنْتَ", f: "أَنْتِ", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (3).jpeg","دروس اللغّة العربيّة مع رغد.docx#الدرس الثالث","WhatsApp Image 2026-10-12 at 22.58.46.jpeg"] },
+  { ar: "عَلَى", fr: "sur", cat: "Petits mots et questions", note: "هَمْزَةٌ عَلَى كُرْسِيٍّ = hamza sur un support", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (5).jpeg","WhatsApp Image 2026-11-03 at 21.00.27 (1).jpeg"] },
 
   // ---- Phrases ----
   { ar: "مَا اسْمُكَ؟", fr: "comment t'appelles-tu ?", cat: "Phrases", m: "مَا اسْمُكَ؟", f: "مَا اسْمُكِ؟", ecrit: "مَا إِسْمُكَ", corr: "اِسْم commence par une hamzat al-waṣl : pas de hamza (ء) sous l'alif.", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (5).jpeg"] },
@@ -331,4 +337,5 @@ const MOTS = [
   { ar: "سُورَةٌ", fr: "sourate", cat: "Autres mots", du: "سُورَتَانِ", pl: "سُوَرٌ", note: "à ne pas confondre avec صُورَةٌ (photo)", src: ["WhatsApp Image 2026-10-09 at 13.32.51 (5).jpeg"] },
   { ar: "الخُرُوجُ", fr: "la sortie (le fait de sortir)", cat: "Autres mots", racine: "خ ر ج", note: "verbe : خَرَجَ ; contraire : الدُّخُولُ", src: ["WhatsApp Image 2026-11-03 at 21.00.26.jpeg","WhatsApp Image 2026-11-03 at 21.00.27 (2).jpeg"] },
   { ar: "الدُّخُولُ", fr: "l'entrée (le fait d'entrer)", cat: "Autres mots", racine: "د خ ل", note: "verbe : دَخَلَ ; contraire : الخُرُوجُ", src: ["WhatsApp Image 2026-11-03 at 21.00.26.jpeg"] },
+  { ar: "خَيْرٌ", fr: "le bien, le bonheur", cat: "Autres mots", note: "صَبَاحُ الخَيْرِ = bonjour ; تُصْبِحُونَ عَلَى خَيْرٍ = bonne nuit", src: ["WhatsApp Image 2026-11-03 at 21.00.27 (1).jpeg"] },
 ];
