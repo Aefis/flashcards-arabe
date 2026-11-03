@@ -4,8 +4,9 @@ const p = "data/mots.js";
 const code = fs.readFileSync(p, "utf8");
 const { MOTS } = new Function(code + "; return { MOTS };")();
 const debut = code.slice(0, code.indexOf("const MOTS = ["));
-const ordreCat = ["Verbes", "Leçon 2 – écriture", "Exercice d'écriture", "Loisirs", "Métiers", "École et études", "Maison", "Personnes", "Adjectifs",
-  "Sentiments", "Nourriture", "Animaux", "Expressions", "Grammaire", "Continents", "Pays arabes", "Pays et villes"];
+const ordreCat = ["Verbes", "Personnes", "Métiers", "École et études", "Langue et grammaire", "Maison et ville", "Objets",
+  "Nourriture", "Animaux", "Nature", "Adjectifs", "Sentiments", "Loisirs", "Petits mots et questions", "Phrases",
+  "Pays arabes", "Continents et pays du monde", "Autres mots"];
 const cats = [...new Set([...ordreCat, ...MOTS.map((m) => m.cat)])].filter((c) => MOTS.some((m) => m.cat === c));
 const champs = ["ar", "fr", "tr", "cat", "racine", "m", "f", "du", "du_f", "pl", "pl_f", "note", "verifier", "ecrit", "corr", "src"];
 const ligne = (m) => "  { " + champs.filter((k) => m[k] !== undefined).map((k) => `${k}: ${JSON.stringify(m[k])}`).join(", ") + " },";

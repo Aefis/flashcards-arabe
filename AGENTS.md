@@ -34,6 +34,8 @@ Quand l'utilisateur demande de lancer l'extraction :
      et une courte explication en français dans `corr` (affichée sur la carte, encadré « Corrigé »).
    - Duel « de base » au nominatif (ـَانِ), pluriel au nominatif.
    - Tous les verbes vont dans la catégorie `Verbes`, avec leur `racine` (ex. "ك ت ب").
+   - Les catégories sont **thématiques** (Personnes, Nature, Maison et ville…), jamais par leçon ou par exercice :
+     le cours est déjà indiqué par la source. Mots-outils (oui, où, et…) → `Petits mots et questions` ; phrases → `Phrases`.
    - Après les ajouts, `node outils/regrouper.js` retrie le fichier par catégorie.
 5. Ajouter les nouveaux fichiers à `FICHIERS_TRAITES` (même ceux sans mots utiles), avec leur cours :
    `"<nom du fichier>": "Cours N"`. Pour trouver N, dans l'ordre : le sous-dossier
