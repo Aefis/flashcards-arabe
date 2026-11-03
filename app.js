@@ -40,6 +40,12 @@ const afficheAr = (s) => (etat.harakat ? s : sansHarakat(s))
   .replace(/\(([^)؀-ۿ]*)\)/g, '<span class="lat">($1)</span>');
 const nomCourt = (f) => f.replace(/^WhatsApp Image /, "");
 
+// Boutons marche / arrêt (harakat, terminaisons)
+function bascule(id, actif) {
+  $(id).setAttribute("aria-pressed", actif);
+  $(id).textContent = actif ? "Activées" : "Désactivées";
+}
+
 // ---------- Filtres ----------
 function remplirFiltres() {
   const cats = [...new Set(MOTS.map((m) => m.cat))];
@@ -50,7 +56,7 @@ function remplirFiltres() {
     cours.map((c) => `<option value="${c}">${c} (${MOTS.filter((m) => m.cours.includes(c)).length})</option>`).join("");
   $("filtre-cat").value = cats.includes(etat.cat) ? etat.cat : "";
   $("filtre-cours").value = cours.includes(etat.cours) ? etat.cours : "";
-  $("harakat").value = etat.harakat ? "1" : "";
+  bascule("harakat", etat.harakat);
   $("sens").value = etat.sens;
   $("a-revoir").value = etat.aRevoir ? "1" : "";
 }
@@ -213,7 +219,7 @@ let audioEnCours = null;
 function parler(texte, bouton = $("ecouter")) {
   // Retirer les annotations françaises « (m.) » et les séparateurs, puis passer à la forme pausale
   texte = texte.replace(/\([^)]*\)/g, "").replace(/[A-Za-zÀ-ÿ.?؟]/g, "").replace(/\//g, "،").trim();
-  if (!$("terminaisons").value) texte = formePausale(texte);
+  if ($("terminaisons").getAttribute("aria-pressed") !== "true") texte = formePausale(texte);
   const fin = () => bouton.classList.remove("joue");
   bouton.classList.add("joue");
   if (audioEnCours) audioEnCours.pause();
@@ -446,10 +452,16 @@ $("reset").addEventListener("click", () => {
   toast("Progression effacée.");
 });
 
-$("terminaisons").value = stock.lire("terminaisons", false) ? "1" : "";
-$("terminaisons").addEventListener("change", (e) => { stock.ecrire("terminaisons", !!e.target.value); const m = etat.paquet[etat.i]; if (m) parler(m.ar); });
+bascule("terminaisons", stock.lire("terminaisons", false));
+$("terminaisons").addEventListener("click", () => {
+  const actif = $("terminaisons").getAttribute("aria-pressed") !== "true";
+  bascule("terminaisons", actif); stock.ecrire("terminaisons", actif);
+  const m = etat.paquet[etat.i]; if (m) parler(m.ar);
+});
 $("voix").addEventListener("change", (e) => { stock.ecrire("voix", e.target.value); parler(etat.paquet[etat.i]?.ar || "مَرْحَبًا"); });
-$("harakat").addEventListener("change", (e) => { etat.harakat = !!e.target.value; stock.ecrire("harakat", etat.harakat); afficherCarte(); afficherListe(); });
+$("harakat").addEventListener("click", () => {
+  etat.harakat = !etat.harakat; stock.ecrire("harakat", etat.harakat); bascule("harakat", etat.harakat); afficherCarte(); afficherListe();
+});
 $("sens").addEventListener("change", (e) => { etat.sens = e.target.value; stock.ecrire("sens", etat.sens); afficherCarte(); });
 $("filtre-cat").addEventListener("change", (e) => { etat.cat = e.target.value; stock.ecrire("cat", etat.cat); construirePaquet(); });
 $("filtre-cours").addEventListener("change", (e) => { etat.cours = e.target.value; stock.ecrire("cours", etat.cours); construirePaquet(); });
