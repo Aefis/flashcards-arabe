@@ -35,8 +35,13 @@ const etat = {
   i: 0,
 };
 
+// Sans « terminaisons » : on n'affiche pas les voyelles de cas en fin de mot (tanwîn ٌ ٍ, damma, kasra),
+// comme on le prononce : بَابٌ → بَاب, الشِّتَاءُ → الشِّتَاء. La fatha finale (كَتَبَ, هُوَ) est gardée.
+const terminaisons = () => $("terminaisons").getAttribute("aria-pressed") === "true";
+// (sauf après ـْتـ : أَنْتِ, قُلْتُ — ces voyelles marquent la personne, pas le cas)
+const sansTerminaisons = (s) => s.replace(/(?:[\u064C\u064D]|(?<!\u0652\u062A)[\u064F\u0650])(?=\u0651?(?:[\s؟?!.,،:;)»/]|$))/g, "");
 // Annotations françaises « (m.) » isolées pour ne pas être inversées dans le texte arabe
-const afficheAr = (s) => (etat.harakat ? s : sansHarakat(s))
+const afficheAr = (s, brut = false) => (etat.harakat ? (brut || terminaisons() ? s : sansTerminaisons(s)) : sansHarakat(s))
   .replace(/\(([^)؀-ۿ]*)\)/g, '<span class="lat">($1)</span>');
 const nomCourt = (f) => f.replace(/^WhatsApp Image /, "");
 
@@ -219,7 +224,7 @@ let audioEnCours = null;
 function parler(texte, bouton = $("ecouter")) {
   // Retirer les annotations françaises « (m.) » et les séparateurs, puis passer à la forme pausale
   texte = texte.replace(/\([^)]*\)/g, "").replace(/[A-Za-zÀ-ÿ.?؟]/g, "").replace(/\//g, "،").trim();
-  if ($("terminaisons").getAttribute("aria-pressed") !== "true") texte = formePausale(texte);
+  if (!terminaisons()) texte = formePausale(texte);
   const fin = () => bouton.classList.remove("joue");
   bouton.classList.add("joue");
   if (audioEnCours) audioEnCours.pause();
@@ -249,7 +254,7 @@ function boutonDire(texte) {
 }
 function blocCorrection(m) {
   if (!m.ecrit) return "";
-  return `<div class="corr"><b>Corrigé</b> — dans tes notes : <span lang="ar" class="barre-ar">${afficheAr(m.ecrit)}</span><br>${m.corr || ""}</div>`;
+  return `<div class="corr"><b>Corrigé</b> — dans tes notes : <span lang="ar" class="barre-ar">${afficheAr(m.ecrit, true)}</span><br>${m.corr || ""}</div>`;
 }
 
 function toast(msg) {
@@ -456,6 +461,7 @@ bascule("terminaisons", stock.lire("terminaisons", false));
 $("terminaisons").addEventListener("click", () => {
   const actif = $("terminaisons").getAttribute("aria-pressed") !== "true";
   bascule("terminaisons", actif); stock.ecrire("terminaisons", actif);
+  afficherCarte(); afficherListe();
   const m = etat.paquet[etat.i]; if (m) parler(m.ar);
 });
 $("voix").addEventListener("change", (e) => { stock.ecrire("voix", e.target.value); parler(etat.paquet[etat.i]?.ar || "مَرْحَبًا"); });
