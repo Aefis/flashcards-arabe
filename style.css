@@ -68,8 +68,6 @@ h1 { font-size: 1.3rem; margin: 0; }
 .tab { border: 0; background: transparent; padding: 6px 14px; border-radius: 7px; cursor: pointer; color: var(--text); font: inherit; }
 .tab.active { background: var(--accent); color: var(--on-accent); }
 
-.switch { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
-.switch input { accent-color: var(--accent); width: 18px; height: 18px; }
 
 main { max-width: 1100px; margin: 0 auto; padding: 0 20px 40px; }
 
@@ -292,53 +290,28 @@ dialog#remarque::backdrop { background: rgba(0, 0, 0, .45); }
 
 .sans-remarques .signaler, .sans-remarques .drapeau { display: none; }
 
-/* ---------- Résumé de la sélection + réglages ---------- */
-.resume {
-  display: flex; gap: 8px; align-items: center;
-  max-width: 1100px; margin: 0 auto; padding: 0 20px 12px;
+/* ---------- Options (menus déroulants) ---------- */
+.options {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 8px 10px; align-items: end;
+  max-width: 1100px; margin: 0 auto; padding: 0 20px 14px;
 }
-.puces {
-  flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px;
-  font: inherit; color: var(--muted); text-align: left; cursor: pointer;
-  background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px;
+.options label { display: flex; flex-direction: column; gap: 3px; min-width: 0; font-size: .72rem; color: var(--muted); letter-spacing: .03em; }
+.options select {
+  font: inherit; font-size: .88rem; color: var(--text); background: var(--surface); width: 100%;
+  border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; cursor: pointer;
 }
-.puces:hover { border-color: var(--accent); color: var(--accent); }
-#puces { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
-#puces::-webkit-scrollbar { display: none; }
-.puce {
-  white-space: nowrap; font-size: .8rem; padding: 3px 10px; border-radius: 99px;
-  background: var(--accent-soft); color: var(--accent);
-}
+.options select:hover, .options select:focus { border-color: var(--accent); }
+.options-boutons { display: flex; gap: 8px; align-items: center; }
 .icone {
-  flex: none; width: 44px; height: 44px; display: grid; place-items: center; cursor: pointer;
-  background: var(--surface); color: var(--muted); border: 1px solid var(--border); border-radius: 12px;
+  flex: none; width: 40px; height: 40px; display: grid; place-items: center; cursor: pointer;
+  background: var(--surface); color: var(--muted); border: 1px solid var(--border); border-radius: 10px;
 }
 .icone:hover { color: var(--accent); border-color: var(--accent); }
-
-dialog.feuille {
-  width: min(460px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 0;
-  border: 1px solid var(--border); border-radius: 18px;
-  background: var(--surface); color: var(--text); box-shadow: var(--shadow);
+.reset {
+  flex: 1; min-width: 0; height: 40px; font: inherit; font-size: .82rem; border-radius: 10px; cursor: pointer;
+  background: transparent; color: var(--red); border: 1px solid var(--border);
 }
-dialog.feuille::backdrop { background: rgba(0, 0, 0, .45); }
-.reglages-corps { display: flex; flex-direction: column; gap: 14px; padding: 8px 20px 20px; }
-.reglages-corps h2 { margin: 6px 0 0; font-size: 1.15rem; }
-.feuille-poignee { width: 40px; height: 4px; border-radius: 99px; background: var(--border); margin: 4px auto 0; display: none; }
-.reglages-corps fieldset { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
-.reglages-corps legend {
-  font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 4px; padding: 0;
-}
-.reglages-corps label:not(.switch) { font-size: .82rem; color: var(--muted); margin-top: 4px; }
-.reglages-corps select {
-  font: inherit; color: var(--text); background: var(--bg);
-  border: 1px solid var(--border); border-radius: 10px; padding: 10px; width: 100%;
-}
-.reglages-corps .switch { padding: 6px 0; color: var(--text); font-size: .92rem; }
-.danger button {
-  font: inherit; padding: 10px; border-radius: 10px; cursor: pointer;
-  background: transparent; color: var(--red); border: 1px solid var(--red);
-}
-.fermer-feuille { padding: 12px; font-size: 1rem; }
+.reset:hover { border-color: var(--red); }
 
 /* ---------- Progression ---------- */
 .progression { max-width: 620px; margin: 0 auto 10px; display: flex; flex-direction: column; gap: 6px; }
@@ -371,20 +344,11 @@ dialog.feuille::backdrop { background: rgba(0, 0, 0, .45); }
 
 /* ---------- Téléphone ---------- */
 @media (max-width: 700px) {
-  .resume { padding: 0 16px 10px; }
-  /* Réglages : panneau qui monte du bas de l'écran */
-  dialog.feuille {
-    width: 100%; max-width: 100%; margin: auto 0 0; border-radius: 18px 18px 0 0; border-bottom: 0;
-    max-height: 88dvh; padding-bottom: env(safe-area-inset-bottom, 0px);
-  }
-  dialog.feuille[open] { animation: monter .22s ease-out; }
-  .feuille-poignee { display: block; }
+  .options { grid-template-columns: 1fr 1fr; padding: 0 16px 10px; }
   /* On change de carte en glissant : seuls « À revoir » et « Je sais » restent */
   #prec, #suiv { display: none; }
   .actions button { padding: 16px 8px; font-size: 1.05rem; }
 }
-@keyframes monter { from { transform: translateY(40%); opacity: .4; } }
-@media (prefers-reduced-motion: reduce) { dialog.feuille[open] { animation: none; } }
 
 /* Écran de fin : plus de boutons de réponse */
 .termine .actions { visibility: hidden; }

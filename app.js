@@ -50,22 +50,9 @@ function remplirFiltres() {
     cours.map((c) => `<option value="${c}">${c} (${MOTS.filter((m) => m.cours.includes(c)).length})</option>`).join("");
   $("filtre-cat").value = cats.includes(etat.cat) ? etat.cat : "";
   $("filtre-cours").value = cours.includes(etat.cours) ? etat.cours : "";
-  $("harakat").checked = etat.harakat;
+  $("harakat").value = etat.harakat ? "1" : "";
   $("sens").value = etat.sens;
-  $("a-revoir").checked = etat.aRevoir;
-  majPuces();
-}
-
-// Résumé de la sélection, affiché en haut (ouvre les réglages)
-function majPuces() {
-  const puces = [
-    etat.cours || "Tous les cours",
-    etat.cat || "Toutes catégories",
-    etat.sens === "ar" ? "AR → FR" : "FR → AR",
-  ];
-  if (etat.aRevoir) puces.push("Pas encore sus");
-  if (!etat.harakat) puces.push("Sans harakat");
-  $("puces").innerHTML = puces.map((p) => `<span class="puce">${p}</span>`).join("");
+  $("a-revoir").value = etat.aRevoir ? "1" : "";
 }
 
 function motsFiltres() {
@@ -84,7 +71,6 @@ function construirePaquet(melanger = false) {
     }
   }
   etat.i = 0;
-  majPuces();
   afficherCarte();
   afficherListe();
 }
@@ -227,7 +213,7 @@ let audioEnCours = null;
 function parler(texte, bouton = $("ecouter")) {
   // Retirer les annotations françaises « (m.) » et les séparateurs, puis passer à la forme pausale
   texte = texte.replace(/\([^)]*\)/g, "").replace(/[A-Za-zÀ-ÿ.?؟]/g, "").replace(/\//g, "،").trim();
-  if (!$("terminaisons").checked) texte = formePausale(texte);
+  if (!$("terminaisons").value) texte = formePausale(texte);
   const fin = () => bouton.classList.remove("joue");
   bouton.classList.add("joue");
   if (audioEnCours) audioEnCours.pause();
@@ -450,27 +436,24 @@ $("reset").addEventListener("click", () => {
   const b = $("reset");
   if (!b.dataset.confirmer) {
     b.dataset.confirmer = "1";
-    b.textContent = "Confirmer : tout effacer ?";
-    setTimeout(() => { delete b.dataset.confirmer; b.textContent = "Réinitialiser la progression"; }, 4000);
+    b.textContent = "Confirmer ?";
+    setTimeout(() => { delete b.dataset.confirmer; b.textContent = "Réinitialiser"; }, 4000);
     return;
   }
   delete b.dataset.confirmer;
-  b.textContent = "Réinitialiser la progression";
+  b.textContent = "Réinitialiser";
   etat.connus = {}; stock.ecrire("connus", {}); construirePaquet();
   toast("Progression effacée.");
 });
 
-$("ouvrir-reglages").addEventListener("click", () => $("reglages").showModal());
-// Toucher le fond grisé ferme le panneau
-$("reglages").addEventListener("click", (e) => { if (e.target === $("reglages")) $("reglages").close(); });
-$("terminaisons").checked = stock.lire("terminaisons", false);
-$("terminaisons").addEventListener("change", (e) => { stock.ecrire("terminaisons", e.target.checked); const m = etat.paquet[etat.i]; if (m) parler(m.ar); });
+$("terminaisons").value = stock.lire("terminaisons", false) ? "1" : "";
+$("terminaisons").addEventListener("change", (e) => { stock.ecrire("terminaisons", !!e.target.value); const m = etat.paquet[etat.i]; if (m) parler(m.ar); });
 $("voix").addEventListener("change", (e) => { stock.ecrire("voix", e.target.value); parler(etat.paquet[etat.i]?.ar || "مَرْحَبًا"); });
-$("harakat").addEventListener("change", (e) => { etat.harakat = e.target.checked; stock.ecrire("harakat", etat.harakat); majPuces(); afficherCarte(); afficherListe(); });
-$("sens").addEventListener("change", (e) => { etat.sens = e.target.value; stock.ecrire("sens", etat.sens); majPuces(); afficherCarte(); });
+$("harakat").addEventListener("change", (e) => { etat.harakat = !!e.target.value; stock.ecrire("harakat", etat.harakat); afficherCarte(); afficherListe(); });
+$("sens").addEventListener("change", (e) => { etat.sens = e.target.value; stock.ecrire("sens", etat.sens); afficherCarte(); });
 $("filtre-cat").addEventListener("change", (e) => { etat.cat = e.target.value; stock.ecrire("cat", etat.cat); construirePaquet(); });
 $("filtre-cours").addEventListener("change", (e) => { etat.cours = e.target.value; stock.ecrire("cours", etat.cours); construirePaquet(); });
-$("a-revoir").addEventListener("change", (e) => { etat.aRevoir = e.target.checked; stock.ecrire("aRevoir", etat.aRevoir); construirePaquet(); });
+$("a-revoir").addEventListener("change", (e) => { etat.aRevoir = !!e.target.value; stock.ecrire("aRevoir", etat.aRevoir); construirePaquet(); });
 $("recherche").addEventListener("input", afficherListe);
 // Boutons 🔊 des formes (carte et liste) : ne pas retourner la carte
 document.addEventListener("click", (e) => {
@@ -489,7 +472,7 @@ document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () 
 }));
 
 document.addEventListener("keydown", (e) => {
-  if ($("vue-cartes").hidden || $("remarque").open || $("reglages").open || e.target.matches("input, select, textarea")) return;
+  if ($("vue-cartes").hidden || $("remarque").open || e.target.matches("input, select, textarea")) return;
   if (!$("fin").hidden) return;
   if (e.key === " ") { e.preventDefault(); retourner(); }
   else if (e.key === "ArrowRight") aller(1);
